@@ -27,7 +27,7 @@ void rate_Calculation()
   TString fileName_In = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/rootTree_calibratedOutputZeroBias_MC_SingleNeutrino_20210727.root";
   TString treeName_In = "outTreeForCalibration";
   TString fileName_LUT = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/Iso_LUTs_Options_MC_VBF_20210727.root";
-  TString fileName_Out = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/hist_rate_calibratedOutputZeroBias_MC_SingleNeutrino_Iso_LUT_Option_20210727.root";
+  TString fileName_Out = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/hist_rate_calibratedOutputZeroBias_MC_SingleNeutrino_Iso_LUT_Option_20210727_Calib.root";
 
   TFile fileIn(fileName_In.Data(),"READ");
   TTree* treeIn = (TTree*)fileIn.Get(treeName_In);
@@ -45,7 +45,7 @@ void rate_Calculation()
       histosIsolation.insert(make_pair(CurrentNameHisto,current_Histo));
     }  
 
-  for(UInt_t i = 1 ; i < 23 ; ++i)
+  for(UInt_t i = 1 ; i < 32 ; ++i)
     {
       TString CurrentNameHisto = "LUT_Progression_";
       ostringstream convert;
@@ -122,6 +122,15 @@ void rate_Calculation()
   TH1F* pt_Progression_20 = new TH1F("pt_Progression_20","pt_Progression_20",240,0.,240.);
   TH1F* pt_Progression_21 = new TH1F("pt_Progression_21","pt_Progression_21",240,0.,240.);
   TH1F* pt_Progression_22 = new TH1F("pt_Progression_22","pt_Progression_22",240,0.,240.);
+  TH1F* pt_Progression_23 = new TH1F("pt_Progression_23","pt_Progression_23",240,0.,240.);
+  TH1F* pt_Progression_24 = new TH1F("pt_Progression_24","pt_Progression_24",240,0.,240.);
+  TH1F* pt_Progression_25 = new TH1F("pt_Progression_25","pt_Progression_25",240,0.,240.);
+  TH1F* pt_Progression_26 = new TH1F("pt_Progression_26","pt_Progression_26",240,0.,240.);
+  TH1F* pt_Progression_27 = new TH1F("pt_Progression_27","pt_Progression_27",240,0.,240.);
+  TH1F* pt_Progression_28 = new TH1F("pt_Progression_28","pt_Progression_28",240,0.,240.);
+  TH1F* pt_Progression_29 = new TH1F("pt_Progression_29","pt_Progression_29",240,0.,240.);
+  TH1F* pt_Progression_30 = new TH1F("pt_Progression_30","pt_Progression_30",240,0.,240.);
+  TH1F* pt_Progression_31 = new TH1F("pt_Progression_31","pt_Progression_31",240,0.,240.);
   TH1F* pt_Progression_31_extrap = new TH1F("pt_Progression_31_extrap","pt_Progression_31_extrap",240,0.,240.);
 
   TH2F* pt_IsoInf_DiTau = new TH2F("pt_IsoInf_DiTau","pt_IsoInf_DiTau",240,0.,240.,240,0.,240.);
@@ -148,6 +157,15 @@ void rate_Calculation()
   TH2F* pt_DiTau_Progression_20 = new TH2F("pt_DiTau_Progression_20","pt_DiTau_Progression_20",240,0.,240.,240,0.,240.);//
   TH2F* pt_DiTau_Progression_21 = new TH2F("pt_DiTau_Progression_21","pt_DiTau_Progression_21",240,0.,240.,240,0.,240.);//
   TH2F* pt_DiTau_Progression_22 = new TH2F("pt_DiTau_Progression_22","pt_DiTau_Progression_22",240,0.,240.,240,0.,240.);//
+  TH2F* pt_DiTau_Progression_23 = new TH2F("pt_DiTau_Progression_23","pt_DiTau_Progression_23",240,0.,240.,240,0.,240.);// 
+  TH2F* pt_DiTau_Progression_24 = new TH2F("pt_DiTau_Progression_24","pt_DiTau_Progression_24",240,0.,240.,240,0.,240.);//
+  TH2F* pt_DiTau_Progression_25 = new TH2F("pt_DiTau_Progression_25","pt_DiTau_Progression_25",240,0.,240.,240,0.,240.);//
+  TH2F* pt_DiTau_Progression_26 = new TH2F("pt_DiTau_Progression_26","pt_DiTau_Progression_26",240,0.,240.,240,0.,240.);//
+  TH2F* pt_DiTau_Progression_27 = new TH2F("pt_DiTau_Progression_27","pt_DiTau_Progression_27",240,0.,240.,240,0.,240.);//
+  TH2F* pt_DiTau_Progression_28 = new TH2F("pt_DiTau_Progression_28","pt_DiTau_Progression_28",240,0.,240.,240,0.,240.);//
+  TH2F* pt_DiTau_Progression_29 = new TH2F("pt_DiTau_Progression_29","pt_DiTau_Progression_29",240,0.,240.,240,0.,240.);//
+  TH2F* pt_DiTau_Progression_30 = new TH2F("pt_DiTau_Progression_30","pt_DiTau_Progression_30",240,0.,240.,240,0.,240.);//
+  TH2F* pt_DiTau_Progression_31 = new TH2F("pt_DiTau_Progression_31","pt_DiTau_Progression_31",240,0.,240.,240,0.,240.);//
   TH2F* pt_DiTau_Progression_31_extrap = new TH2F("pt_DiTau_Progression_31_extrap","pt_DiTau_Progression_31_extrap",240,0.,240.,240,0.,240.);//
 
   TH1F* pt_Stage1 = new TH1F("pt_Stage1","pt_Stage1",240,0.,240.);
@@ -217,6 +235,15 @@ void rate_Calculation()
       bool Filled_Progression_20 = kFALSE;
       bool Filled_Progression_21 = kFALSE;
       bool Filled_Progression_22 = kFALSE;
+      bool Filled_Progression_23 = kFALSE;
+      bool Filled_Progression_24 = kFALSE;
+      bool Filled_Progression_25 = kFALSE;
+      bool Filled_Progression_26 = kFALSE;
+      bool Filled_Progression_27 = kFALSE;
+      bool Filled_Progression_28 = kFALSE;
+      bool Filled_Progression_29 = kFALSE;
+      bool Filled_Progression_30 = kFALSE;
+      bool Filled_Progression_31 = kFALSE;
       bool Filled_Progression_31_extrap = kFALSE;
 
       std::vector<Int_t> Index_Taus_IsoInf;
@@ -339,6 +366,87 @@ void rate_Calculation()
       eta_Taus_Progression_22.push_back(-99.); eta_Taus_Progression_22.push_back(-99.);
       std::vector<Int_t> isMerged_Taus_Progression_22;
       isMerged_Taus_Progression_22.push_back(-99.); isMerged_Taus_Progression_22.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_23;
+      Index_Taus_Progression_23.push_back(-1); Index_Taus_Progression_23.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_23;
+      pt_Taus_Progression_23.push_back(-99.); pt_Taus_Progression_23.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_23;
+      eta_Taus_Progression_23.push_back(-99.); eta_Taus_Progression_23.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_23;
+      isMerged_Taus_Progression_23.push_back(-99.); isMerged_Taus_Progression_23.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_24;
+      Index_Taus_Progression_24.push_back(-1); Index_Taus_Progression_24.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_24;
+      pt_Taus_Progression_24.push_back(-99.); pt_Taus_Progression_24.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_24;
+      eta_Taus_Progression_24.push_back(-99.); eta_Taus_Progression_24.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_24;
+      isMerged_Taus_Progression_24.push_back(-99.); isMerged_Taus_Progression_24.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_25;
+      Index_Taus_Progression_25.push_back(-1); Index_Taus_Progression_25.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_25;
+      pt_Taus_Progression_25.push_back(-99.); pt_Taus_Progression_25.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_25;
+      eta_Taus_Progression_25.push_back(-99.); eta_Taus_Progression_25.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_25;
+      isMerged_Taus_Progression_25.push_back(-99.); isMerged_Taus_Progression_25.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_26;
+      Index_Taus_Progression_26.push_back(-1); Index_Taus_Progression_26.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_26;
+      pt_Taus_Progression_26.push_back(-99.); pt_Taus_Progression_26.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_26;
+      eta_Taus_Progression_26.push_back(-99.); eta_Taus_Progression_26.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_26;
+      isMerged_Taus_Progression_26.push_back(-99.); isMerged_Taus_Progression_26.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_27;
+      Index_Taus_Progression_27.push_back(-1); Index_Taus_Progression_27.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_27;
+      pt_Taus_Progression_27.push_back(-99.); pt_Taus_Progression_27.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_27;
+      eta_Taus_Progression_27.push_back(-99.); eta_Taus_Progression_27.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_27;
+      isMerged_Taus_Progression_27.push_back(-99.); isMerged_Taus_Progression_27.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_28;
+      Index_Taus_Progression_28.push_back(-1); Index_Taus_Progression_28.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_28;
+      pt_Taus_Progression_28.push_back(-99.); pt_Taus_Progression_28.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_28;
+      eta_Taus_Progression_28.push_back(-99.); eta_Taus_Progression_28.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_28;
+      isMerged_Taus_Progression_28.push_back(-99.); isMerged_Taus_Progression_28.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_29;
+      Index_Taus_Progression_29.push_back(-1); Index_Taus_Progression_29.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_29;
+      pt_Taus_Progression_29.push_back(-99.); pt_Taus_Progression_29.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_29;
+      eta_Taus_Progression_29.push_back(-99.); eta_Taus_Progression_29.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_29;
+      isMerged_Taus_Progression_29.push_back(-99.); isMerged_Taus_Progression_29.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_30;
+      Index_Taus_Progression_30.push_back(-1); Index_Taus_Progression_30.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_30;
+      pt_Taus_Progression_30.push_back(-99.); pt_Taus_Progression_30.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_30;
+      eta_Taus_Progression_30.push_back(-99.); eta_Taus_Progression_30.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_30;
+      isMerged_Taus_Progression_30.push_back(-99.); isMerged_Taus_Progression_30.push_back(-99.);
+
+      std::vector<Int_t> Index_Taus_Progression_31;
+      Index_Taus_Progression_31.push_back(-1); Index_Taus_Progression_31.push_back(-1);
+      std::vector<Float_t> pt_Taus_Progression_31;
+      pt_Taus_Progression_31.push_back(-99.); pt_Taus_Progression_31.push_back(-99.);
+      std::vector<Float_t> eta_Taus_Progression_31;
+      eta_Taus_Progression_31.push_back(-99.); eta_Taus_Progression_31.push_back(-99.);
+      std::vector<Int_t> isMerged_Taus_Progression_31;
+      isMerged_Taus_Progression_31.push_back(-99.); isMerged_Taus_Progression_31.push_back(-99.);
 
       std::vector<Int_t> Index_Taus_Progression_31_extrap;
       Index_Taus_Progression_31_extrap.push_back(-1); Index_Taus_Progression_31_extrap.push_back(-1);
@@ -534,7 +642,81 @@ void rate_Calculation()
 	      pt_Progression_22->Fill(in_CalibPt->at(iL1Tau));
 	      Filled_Progression_22 = kTRUE;
 	    }
-	  /*
+
+
+          TString Result_Progression_23 = "LUT_Progression_23";
+          Int_t IsoCut_Progression_23 = histosIsolation[Result_Progression_23]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_23 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_23)
+            {
+              pt_Progression_23->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_23 = kTRUE;
+            }
+
+          TString Result_Progression_24 = "LUT_Progression_24";
+          Int_t IsoCut_Progression_24 = histosIsolation[Result_Progression_24]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_24 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_24)
+            {
+              pt_Progression_24->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_24 = kTRUE;
+            }
+
+
+          TString Result_Progression_25 = "LUT_Progression_25";
+          Int_t IsoCut_Progression_25 = histosIsolation[Result_Progression_25]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_25 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_25)
+            {
+              pt_Progression_25->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_25 = kTRUE;
+            }
+
+          TString Result_Progression_26 = "LUT_Progression_26";
+          Int_t IsoCut_Progression_26 = histosIsolation[Result_Progression_26]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_26 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_26)
+            {
+              pt_Progression_26->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_26 = kTRUE;
+            }
+
+          TString Result_Progression_27 = "LUT_Progression_27";
+          Int_t IsoCut_Progression_27 = histosIsolation[Result_Progression_27]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_27 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_27)
+            {
+              pt_Progression_27->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_27 = kTRUE;
+            }
+
+          TString Result_Progression_28 = "LUT_Progression_28";
+          Int_t IsoCut_Progression_28 = histosIsolation[Result_Progression_28]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_28 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_28)
+            {
+              pt_Progression_28->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_28 = kTRUE;
+            }
+
+          TString Result_Progression_29 = "LUT_Progression_29";
+          Int_t IsoCut_Progression_29 = histosIsolation[Result_Progression_29]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_29 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_29)
+            {
+              pt_Progression_29->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_29 = kTRUE;
+            }
+
+          TString Result_Progression_30 = "LUT_Progression_30";
+          Int_t IsoCut_Progression_30 = histosIsolation[Result_Progression_30]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_30 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_30)
+            {
+              pt_Progression_30->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_30 = kTRUE;
+            }
+
+          TString Result_Progression_31 = "LUT_Progression_31";
+          Int_t IsoCut_Progression_31 = histosIsolation[Result_Progression_31]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
+          if(!Filled_Progression_31 && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_31)
+            {
+              pt_Progression_31->Fill(in_CalibPt->at(iL1Tau));
+              Filled_Progression_31 = kTRUE;
+            }
+
 	  TString Result_Progression_31_extrap = "LUT_Progression_31_extrap";
           Int_t IsoCut_Progression_31_extrap = histosIsolation[Result_Progression_31_extrap]->GetBinContent(in_compressedieta->at(iL1Tau)+1,in_compressedE->at(iL1Tau)+1,in_compressednTT->at(iL1Tau)+1);
           if(!Filled_Progression_31_extrap && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_31_extrap)
@@ -542,7 +724,7 @@ void rate_Calculation()
               pt_Progression_31_extrap->Fill(in_CalibPt->at(iL1Tau));
               Filled_Progression_31_extrap = kTRUE;
             }
-	  */
+
 
 	  //DiTau trigger
 	  if(in_CalibPt->at(iL1Tau)>=pt_Taus_IsoInf.at(0))
@@ -849,7 +1031,178 @@ void rate_Calculation()
 	      eta_Taus_Progression_22.at(1)=in_l1tEmuEta->at(iL1Tau);
 	      isMerged_Taus_Progression_22.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
 	    }
-	  /*
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_23.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_23)
+            {
+              Index_Taus_Progression_23.at(1)=Index_Taus_Progression_23.at(0);
+              pt_Taus_Progression_23.at(1)=pt_Taus_Progression_23.at(0);
+              eta_Taus_Progression_23.at(1)=eta_Taus_Progression_23.at(0);
+              isMerged_Taus_Progression_23.at(1)=isMerged_Taus_Progression_23.at(0);
+              Index_Taus_Progression_23.at(0)=iL1Tau;
+              pt_Taus_Progression_23.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_23.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_23.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_23.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_23)
+            {
+              Index_Taus_Progression_23.at(1)=iL1Tau;
+              pt_Taus_Progression_23.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_23.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_23.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_24.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_24)
+            {
+              Index_Taus_Progression_24.at(1)=Index_Taus_Progression_24.at(0);
+              pt_Taus_Progression_24.at(1)=pt_Taus_Progression_24.at(0);
+              eta_Taus_Progression_24.at(1)=eta_Taus_Progression_24.at(0);
+              isMerged_Taus_Progression_24.at(1)=isMerged_Taus_Progression_24.at(0);
+              Index_Taus_Progression_24.at(0)=iL1Tau;
+              pt_Taus_Progression_24.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_24.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_24.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_24.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_24)
+            {
+              Index_Taus_Progression_24.at(1)=iL1Tau;
+              pt_Taus_Progression_24.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_24.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_24.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_25.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_25)
+            {
+              Index_Taus_Progression_25.at(1)=Index_Taus_Progression_25.at(0);
+              pt_Taus_Progression_25.at(1)=pt_Taus_Progression_25.at(0);
+              eta_Taus_Progression_25.at(1)=eta_Taus_Progression_25.at(0);
+              isMerged_Taus_Progression_25.at(1)=isMerged_Taus_Progression_25.at(0);
+              Index_Taus_Progression_25.at(0)=iL1Tau;
+              pt_Taus_Progression_25.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_25.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_25.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_25.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_25)
+            {
+              Index_Taus_Progression_25.at(1)=iL1Tau;
+              pt_Taus_Progression_25.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_25.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_25.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_26.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_26)
+            {
+              Index_Taus_Progression_26.at(1)=Index_Taus_Progression_26.at(0);
+              pt_Taus_Progression_26.at(1)=pt_Taus_Progression_26.at(0);
+              eta_Taus_Progression_26.at(1)=eta_Taus_Progression_26.at(0);
+              isMerged_Taus_Progression_26.at(1)=isMerged_Taus_Progression_26.at(0);
+              Index_Taus_Progression_26.at(0)=iL1Tau;
+              pt_Taus_Progression_26.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_26.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_26.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_26.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_26)
+            {
+              Index_Taus_Progression_26.at(1)=iL1Tau;
+              pt_Taus_Progression_26.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_26.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_26.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_27.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_27)
+            {
+              Index_Taus_Progression_27.at(1)=Index_Taus_Progression_27.at(0);
+              pt_Taus_Progression_27.at(1)=pt_Taus_Progression_27.at(0);
+              eta_Taus_Progression_27.at(1)=eta_Taus_Progression_27.at(0);
+              isMerged_Taus_Progression_27.at(1)=isMerged_Taus_Progression_27.at(0);
+              Index_Taus_Progression_27.at(0)=iL1Tau;
+              pt_Taus_Progression_27.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_27.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_27.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_27.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_27)
+            {
+              Index_Taus_Progression_27.at(1)=iL1Tau;
+              pt_Taus_Progression_27.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_27.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_27.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_28.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_28)
+            {
+              Index_Taus_Progression_28.at(1)=Index_Taus_Progression_28.at(0);
+              pt_Taus_Progression_28.at(1)=pt_Taus_Progression_28.at(0);
+              eta_Taus_Progression_28.at(1)=eta_Taus_Progression_28.at(0);
+              isMerged_Taus_Progression_28.at(1)=isMerged_Taus_Progression_28.at(0);
+              Index_Taus_Progression_28.at(0)=iL1Tau;
+              pt_Taus_Progression_28.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_28.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_28.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_28.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_28)
+            {
+              Index_Taus_Progression_28.at(1)=iL1Tau;
+              pt_Taus_Progression_28.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_28.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_28.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_29.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_29)
+            {
+              Index_Taus_Progression_29.at(1)=Index_Taus_Progression_29.at(0);
+              pt_Taus_Progression_29.at(1)=pt_Taus_Progression_29.at(0);
+              eta_Taus_Progression_29.at(1)=eta_Taus_Progression_29.at(0);
+              isMerged_Taus_Progression_29.at(1)=isMerged_Taus_Progression_29.at(0);
+              Index_Taus_Progression_29.at(0)=iL1Tau;
+              pt_Taus_Progression_29.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_29.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_29.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_29.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_29)
+            {
+              Index_Taus_Progression_29.at(1)=iL1Tau;
+              pt_Taus_Progression_29.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_29.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_29.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_30.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_30)
+            {
+              Index_Taus_Progression_30.at(1)=Index_Taus_Progression_30.at(0);
+              pt_Taus_Progression_30.at(1)=pt_Taus_Progression_30.at(0);
+              eta_Taus_Progression_30.at(1)=eta_Taus_Progression_30.at(0);
+              isMerged_Taus_Progression_30.at(1)=isMerged_Taus_Progression_30.at(0);
+              Index_Taus_Progression_30.at(0)=iL1Tau;
+              pt_Taus_Progression_30.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_30.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_30.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_30.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_30)
+            {
+              Index_Taus_Progression_30.at(1)=iL1Tau;
+              pt_Taus_Progression_30.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_30.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_30.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
+          if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_31.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_31)
+            {
+              Index_Taus_Progression_31.at(1)=Index_Taus_Progression_31.at(0);
+              pt_Taus_Progression_31.at(1)=pt_Taus_Progression_31.at(0);
+              eta_Taus_Progression_31.at(1)=eta_Taus_Progression_31.at(0);
+              isMerged_Taus_Progression_31.at(1)=isMerged_Taus_Progression_31.at(0);
+              Index_Taus_Progression_31.at(0)=iL1Tau;
+              pt_Taus_Progression_31.at(0)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_31.at(0)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_31.at(0)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+          else if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_31.at(1) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_31)
+            {
+              Index_Taus_Progression_31.at(1)=iL1Tau;
+              pt_Taus_Progression_31.at(1)=in_CalibPt->at(iL1Tau);
+              eta_Taus_Progression_31.at(1)=in_l1tEmuEta->at(iL1Tau);
+              isMerged_Taus_Progression_31.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
+            }
+
 	  if(in_CalibPt->at(iL1Tau)>=pt_Taus_Progression_31_extrap.at(0) && in_l1tEmuIsoEt->at(iL1Tau)<=IsoCut_Progression_31_extrap)
             {
               Index_Taus_Progression_31_extrap.at(1)=Index_Taus_Progression_31_extrap.at(0);
@@ -868,9 +1221,6 @@ void rate_Calculation()
               eta_Taus_Progression_31_extrap.at(1)=in_l1tEmuEta->at(iL1Tau);
               isMerged_Taus_Progression_31_extrap.at(1)=in_l1tEmuIsMerged->at(iL1Tau);
             }
-	  */
-
-
 
 	}
       
@@ -976,6 +1326,42 @@ void rate_Calculation()
 	{
 	  pt_DiTau_Progression_22->Fill(pt_Taus_Progression_22.at(0),pt_Taus_Progression_22.at(1),weight);
 	}
+      if(Index_Taus_Progression_23.at(0)>=0 && Index_Taus_Progression_23.at(1)>=0)
+        {
+          pt_DiTau_Progression_23->Fill(pt_Taus_Progression_23.at(0),pt_Taus_Progression_23.at(1),weight);
+        }
+      if(Index_Taus_Progression_24.at(0)>=0 && Index_Taus_Progression_24.at(1)>=0)
+        {
+          pt_DiTau_Progression_24->Fill(pt_Taus_Progression_24.at(0),pt_Taus_Progression_24.at(1),weight);
+        }
+      if(Index_Taus_Progression_25.at(0)>=0 && Index_Taus_Progression_25.at(1)>=0)
+        {
+          pt_DiTau_Progression_25->Fill(pt_Taus_Progression_25.at(0),pt_Taus_Progression_25.at(1),weight);
+        }
+      if(Index_Taus_Progression_26.at(0)>=0 && Index_Taus_Progression_26.at(1)>=0)
+        {
+          pt_DiTau_Progression_26->Fill(pt_Taus_Progression_26.at(0),pt_Taus_Progression_26.at(1),weight);
+        }
+      if(Index_Taus_Progression_27.at(0)>=0 && Index_Taus_Progression_27.at(1)>=0)
+        {
+          pt_DiTau_Progression_27->Fill(pt_Taus_Progression_27.at(0),pt_Taus_Progression_27.at(1),weight);
+        }
+      if(Index_Taus_Progression_28.at(0)>=0 && Index_Taus_Progression_28.at(1)>=0)
+        {
+          pt_DiTau_Progression_28->Fill(pt_Taus_Progression_28.at(0),pt_Taus_Progression_28.at(1),weight);
+        }
+      if(Index_Taus_Progression_29.at(0)>=0 && Index_Taus_Progression_29.at(1)>=0)
+        {
+          pt_DiTau_Progression_29->Fill(pt_Taus_Progression_29.at(0),pt_Taus_Progression_29.at(1),weight);
+        }
+      if(Index_Taus_Progression_30.at(0)>=0 && Index_Taus_Progression_30.at(1)>=0)
+        {
+          pt_DiTau_Progression_30->Fill(pt_Taus_Progression_30.at(0),pt_Taus_Progression_30.at(1),weight);
+        }
+      if(Index_Taus_Progression_31.at(0)>=0 && Index_Taus_Progression_31.at(1)>=0)
+        {
+          pt_DiTau_Progression_31->Fill(pt_Taus_Progression_31.at(0),pt_Taus_Progression_31.at(1),weight);
+        }
       if(Index_Taus_Progression_31_extrap.at(0)>=0 && Index_Taus_Progression_31_extrap.at(1)>=0)
         {
           pt_DiTau_Progression_31_extrap->Fill(pt_Taus_Progression_31_extrap.at(0),pt_Taus_Progression_31_extrap.at(1),weight);
@@ -1032,6 +1418,15 @@ void rate_Calculation()
   TH1F* rate_Progression_20 = new TH1F("rate_Progression_20","rate_Progression_20",240,0.,240.);
   TH1F* rate_Progression_21 = new TH1F("rate_Progression_21","rate_Progression_21",240,0.,240.);
   TH1F* rate_Progression_22 = new TH1F("rate_Progression_22","rate_Progression_22",240,0.,240.);
+  TH1F* rate_Progression_23 = new TH1F("rate_Progression_23","rate_Progression_23",240,0.,240.);
+  TH1F* rate_Progression_24 = new TH1F("rate_Progression_24","rate_Progression_24",240,0.,240.);
+  TH1F* rate_Progression_25 = new TH1F("rate_Progression_25","rate_Progression_25",240,0.,240.);
+  TH1F* rate_Progression_26 = new TH1F("rate_Progression_26","rate_Progression_26",240,0.,240.);
+  TH1F* rate_Progression_27 = new TH1F("rate_Progression_27","rate_Progression_27",240,0.,240.);
+  TH1F* rate_Progression_28 = new TH1F("rate_Progression_28","rate_Progression_28",240,0.,240.);
+  TH1F* rate_Progression_29 = new TH1F("rate_Progression_29","rate_Progression_29",240,0.,240.);
+  TH1F* rate_Progression_30 = new TH1F("rate_Progression_30","rate_Progression_30",240,0.,240.);
+  TH1F* rate_Progression_31 = new TH1F("rate_Progression_31","rate_Progression_31",240,0.,240.);
   TH1F* rate_Progression_31_extrap = new TH1F("rate_Progression_31_extrap","rate_Progression_31_extrap",240,0.,240.);
 
 
@@ -1058,6 +1453,15 @@ void rate_Calculation()
   TH1F* rate_DiTau_Progression_20 = new TH1F("rate_DiTau_Progression_20","rate_DiTau_Progression_20",240,0.,240.);
   TH1F* rate_DiTau_Progression_21 = new TH1F("rate_DiTau_Progression_21","rate_DiTau_Progression_21",240,0.,240.);
   TH1F* rate_DiTau_Progression_22 = new TH1F("rate_DiTau_Progression_22","rate_DiTau_Progression_22",240,0.,240.);
+  TH1F* rate_DiTau_Progression_23 = new TH1F("rate_DiTau_Progression_23","rate_DiTau_Progression_23",240,0.,240.);
+  TH1F* rate_DiTau_Progression_24 = new TH1F("rate_DiTau_Progression_24","rate_DiTau_Progression_24",240,0.,240.);
+  TH1F* rate_DiTau_Progression_25 = new TH1F("rate_DiTau_Progression_25","rate_DiTau_Progression_25",240,0.,240.);
+  TH1F* rate_DiTau_Progression_26 = new TH1F("rate_DiTau_Progression_26","rate_DiTau_Progression_26",240,0.,240.);
+  TH1F* rate_DiTau_Progression_27 = new TH1F("rate_DiTau_Progression_27","rate_DiTau_Progression_27",240,0.,240.);
+  TH1F* rate_DiTau_Progression_28 = new TH1F("rate_DiTau_Progression_28","rate_DiTau_Progression_28",240,0.,240.);
+  TH1F* rate_DiTau_Progression_29 = new TH1F("rate_DiTau_Progression_29","rate_DiTau_Progression_29",240,0.,240.);
+  TH1F* rate_DiTau_Progression_30 = new TH1F("rate_DiTau_Progression_30","rate_DiTau_Progression_30",240,0.,240.);
+  TH1F* rate_DiTau_Progression_31 = new TH1F("rate_DiTau_Progression_31","rate_DiTau_Progression_31",240,0.,240.);
   TH1F* rate_DiTau_Progression_31_extrap = new TH1F("rate_DiTau_Progression_31_extrap","rate_DiTau_Progression_31_extrap",240,0.,240.);
 
   for(UInt_t i = 0 ; i < 241 ; ++i)
@@ -1084,8 +1488,16 @@ void rate_Calculation()
       rate_Progression_20->SetBinContent(i+1,pt_Progression_20->Integral(i+1,241)/Denominator*scale);
       rate_Progression_21->SetBinContent(i+1,pt_Progression_21->Integral(i+1,241)/Denominator*scale);
       rate_Progression_22->SetBinContent(i+1,pt_Progression_22->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_23->SetBinContent(i+1,pt_Progression_23->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_24->SetBinContent(i+1,pt_Progression_24->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_25->SetBinContent(i+1,pt_Progression_25->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_26->SetBinContent(i+1,pt_Progression_26->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_27->SetBinContent(i+1,pt_Progression_27->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_28->SetBinContent(i+1,pt_Progression_28->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_29->SetBinContent(i+1,pt_Progression_29->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_30->SetBinContent(i+1,pt_Progression_30->Integral(i+1,241)/Denominator*scale);
+      rate_Progression_31->SetBinContent(i+1,pt_Progression_31->Integral(i+1,241)/Denominator*scale);
       rate_Progression_31_extrap->SetBinContent(i+1,pt_Progression_31_extrap->Integral(i+1,241)/Denominator*scale);
-
 
       rate_noCut_DiTau->SetBinContent(i+1,pt_IsoInf_DiTau->Integral(i+1,241,i+1,241)/Denominator*scale);
       rate_DiTau_Progression_1->SetBinContent(i+1,pt_DiTau_Progression_1->Integral(i+1,241,i+1,241)/Denominator*scale);
@@ -1110,6 +1522,15 @@ void rate_Calculation()
       rate_DiTau_Progression_20->SetBinContent(i+1,pt_DiTau_Progression_20->Integral(i+1,241,i+1,241)/Denominator*scale);
       rate_DiTau_Progression_21->SetBinContent(i+1,pt_DiTau_Progression_21->Integral(i+1,241,i+1,241)/Denominator*scale);
       rate_DiTau_Progression_22->SetBinContent(i+1,pt_DiTau_Progression_22->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_23->SetBinContent(i+1,pt_DiTau_Progression_23->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_24->SetBinContent(i+1,pt_DiTau_Progression_24->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_25->SetBinContent(i+1,pt_DiTau_Progression_25->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_26->SetBinContent(i+1,pt_DiTau_Progression_26->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_27->SetBinContent(i+1,pt_DiTau_Progression_27->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_28->SetBinContent(i+1,pt_DiTau_Progression_28->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_29->SetBinContent(i+1,pt_DiTau_Progression_29->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_30->SetBinContent(i+1,pt_DiTau_Progression_30->Integral(i+1,241,i+1,241)/Denominator*scale);
+      rate_DiTau_Progression_31->SetBinContent(i+1,pt_DiTau_Progression_31->Integral(i+1,241,i+1,241)/Denominator*scale);
       rate_DiTau_Progression_31_extrap->SetBinContent(i+1,pt_DiTau_Progression_31_extrap->Integral(i+1,241,i+1,241)/Denominator*scale);
 
     }
@@ -1136,6 +1557,15 @@ void rate_Calculation()
   pt_Progression_20->Write();
   pt_Progression_21->Write();
   pt_Progression_22->Write();
+  pt_Progression_23->Write();
+  pt_Progression_24->Write();
+  pt_Progression_25->Write();
+  pt_Progression_26->Write();
+  pt_Progression_27->Write();
+  pt_Progression_28->Write();
+  pt_Progression_29->Write();
+  pt_Progression_30->Write();
+  pt_Progression_31->Write();
   pt_Progression_31_extrap->Write();
 
   pt_IsoInf_DiTau->Write();
@@ -1160,6 +1590,15 @@ void rate_Calculation()
   pt_DiTau_Progression_20->Write();
   pt_DiTau_Progression_21->Write();
   pt_DiTau_Progression_22->Write();
+  pt_DiTau_Progression_23->Write();
+  pt_DiTau_Progression_24->Write();
+  pt_DiTau_Progression_25->Write();
+  pt_DiTau_Progression_26->Write();
+  pt_DiTau_Progression_27->Write();
+  pt_DiTau_Progression_28->Write();
+  pt_DiTau_Progression_29->Write();
+  pt_DiTau_Progression_30->Write();
+  pt_DiTau_Progression_31->Write();
   pt_DiTau_Progression_31_extrap->Write();
 
   rate_Progression_1->Write();  
@@ -1184,6 +1623,15 @@ void rate_Calculation()
   rate_Progression_20->Write();  
   rate_Progression_21->Write();  
   rate_Progression_22->Write();  
+  rate_Progression_23->Write();
+  rate_Progression_24->Write();
+  rate_Progression_25->Write();
+  rate_Progression_26->Write();
+  rate_Progression_27->Write();
+  rate_Progression_28->Write();
+  rate_Progression_29->Write();
+  rate_Progression_30->Write();
+  rate_Progression_31->Write();
   rate_Progression_31_extrap->Write();
 
   rate_noCut_DiTau->Write();
@@ -1209,6 +1657,15 @@ void rate_Calculation()
   rate_DiTau_Progression_20->Write();
   rate_DiTau_Progression_21->Write();
   rate_DiTau_Progression_22->Write();
+  rate_DiTau_Progression_23->Write();
+  rate_DiTau_Progression_24->Write();
+  rate_DiTau_Progression_25->Write();
+  rate_DiTau_Progression_26->Write();
+  rate_DiTau_Progression_27->Write();
+  rate_DiTau_Progression_28->Write();
+  rate_DiTau_Progression_29->Write();
+  rate_DiTau_Progression_30->Write();
+  rate_DiTau_Progression_31->Write();
   rate_DiTau_Progression_31_extrap->Write();
   rate_Stage1->Write();  
   return;

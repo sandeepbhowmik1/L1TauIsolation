@@ -21,11 +21,8 @@
 #include <fstream>
 
 const Int_t NbinsIEta = 4+1;
-const Int_t NbinsIEt = 16+1;
-//const Int_t NbinsnTT = 11+1;//Acceptable LUT Thomas
-//const Int_t NbinsnTT = 23+1;//Cristina   
-const Int_t NbinsnTT = 20+1;//Sandeep
-
+const Int_t NbinsIEt = 17+1;
+const Int_t NbinsnTT = 15+1; //new nTT CMP
 const Int_t NbinsIEt2 = 32+1;
 const Int_t NbinsnTT2 = 32+1;
 
@@ -33,13 +30,58 @@ using namespace std;
 
 void Build_Isolation_WPs()
 {
-  TString fileName_In = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauCalibration_20210727/rootTree_calibratedOutput_MC_VBF_20210727.root";
+  TString fileName_In = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauCalibration_20211009/rootTree_calibratedOutput_MC_VBF_20211009.root";
   TString treeName_In = "outTreeForCalibration";
-  TString fileName_Out = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/Iso_LUTs_Distributions_MC_VBF_20210727.root";
+  TString fileName_Out = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20211009/Iso_LUTs_Distributions_MC_VBF_20211009.root";
 
   TFile fileIn(fileName_In.Data(),"READ");
   TTree* treeIn = (TTree*)fileIn.Get(treeName_In);
   TFile fileOut(fileName_Out, "RECREATE");
+
+  TH2F* isoEt_vs_nVtx = new TH2F("isoEt_vs_nVtx","isoEt_vs_nVtx",150,0.,150.,100,0.,100.);
+  TH2F* isoEt_vs_nVtx_barrel = new TH2F("isoEt_vs_nVtx_barrel","isoEt_vs_nVtx_barrel",150,0.,150.,100,0.,100.);
+  TH2F* isoEt_vs_nVtx_endcaps = new TH2F("isoEt_vs_nVtx_endcaps","isoEt_vs_nVtx_endcaps",150,0.,150.,100,0.,100.);
+
+  TH2F* isoEt_vs_nTT = new TH2F("isoEt_vs_nTT","isoEt_vs_nTT",150,0.,150.,100,0.,100.);
+  TH2F* isoEt_vs_nTT_barrel = new TH2F("isoEt_vs_nTT_barrel","isoEt_vs_nTT_barrel",150,0.,150.,100,0.,100.);
+  TH2F* isoEt_vs_nTT_endcaps = new TH2F("isoEt_vs_nTT_endcaps","isoEt_vs_nTT_endcaps",150,0.,150.,100,0.,100.);
+
+  TH2F* isoEt_vs_compressednTT = new TH2F("isoEt_vs_compressednTT","isoEt_vs_compressednTT",31,0.,31.,100,0.,100.);
+  TH2F* isoEt_vs_compressednTT_barrel = new TH2F("isoEt_vs_compressednTT_barrel","isoEt_vs_compressednTT_barrel",31,0.,31.,100,0.,100.);
+  TH2F* isoEt_vs_compressednTT_endcaps = new TH2F("isoEt_vs_compressednTT_endcaps","isoEt_vs_compressednTT_endcaps",31,0.,31.,100,0.,100.);
+
+  //treeIn->Draw("L1Tau_Iso:Nvtx>>isoEt_vs_nVtx","","colz");
+  //treeIn->Draw("L1Tau_Iso:Nvtx>>isoEt_vs_nVtx_barrel","abs(OfflineTau_eta)<1.5","colz");
+  //treeIn->Draw("L1Tau_Iso:Nvtx>>isoEt_vs_nVtx_endcaps","abs(OfflineTau_eta)>1.5","colz");
+
+  treeIn->Draw("L1Tau_Iso:L1Tau_nTT>>isoEt_vs_nTT","","colz");
+  treeIn->Draw("L1Tau_Iso:L1Tau_nTT>>isoEt_vs_nTT_barrel","abs(OfflineTau_eta)<1.5","colz");
+  treeIn->Draw("L1Tau_Iso:L1Tau_nTT>>isoEt_vs_nTT_endcaps","abs(OfflineTau_eta)>1.5","colz");
+
+  treeIn->Draw("L1Tau_Iso:compressednTT>>isoEt_vs_compressednTT","","colz");
+  treeIn->Draw("L1Tau_Iso:compressednTT>>isoEt_vs_compressednTT_barrel","abs(OfflineTau_eta)<1.5","colz");
+  treeIn->Draw("L1Tau_Iso:compressednTT>>isoEt_vs_compressednTT_endcaps","abs(OfflineTau_eta)>1.5","colz");
+
+  //TProfile* iso_vs_nvtx_profile = isoEt_vs_nVtx->ProfileX("iso_vs_nvtx_profile");
+  //TProfile* iso_vs_nvtx_barrel_profile = isoEt_vs_nVtx_barrel->ProfileX("iso_vs_nvtx_barrel_profile");
+  //TProfile* iso_vs_nvtx_endcaps_profile = isoEt_vs_nVtx_endcaps->ProfileX("iso_vs_nvtx_endcaps_profile");
+
+  TProfile* iso_vs_nTT_profile = isoEt_vs_nTT->ProfileX("iso_vs_nTT_profile");
+  TProfile* iso_vs_nTT_barrel_profile = isoEt_vs_nTT_barrel->ProfileX("iso_vs_nTT_barrel_profile");
+  TProfile* iso_vs_nTT_endcaps_profile = isoEt_vs_nTT_endcaps->ProfileX("iso_vs_nTT_endcaps_profile");
+
+  TProfile* iso_vs_compressednTT_profile = isoEt_vs_compressednTT->ProfileX("iso_vs_compressednTT_profile");
+  TProfile* iso_vs_compressednTT_barrel_profile = isoEt_vs_compressednTT_barrel->ProfileX("iso_vs_compressednTT_barrel_profile");
+  TProfile* iso_vs_compressednTT_endcaps_profile = isoEt_vs_compressednTT_endcaps->ProfileX("iso_vs_compressednTT_endcaps_profile");
+
+  TF1* iso_vs_compressednTT_fit = new TF1("iso_vs_compressednTT_fit","[0]+[1]*x",0,31);
+  TF1* iso_vs_compressednTT_barrel_fit = new TF1("iso_vs_compressednTT_barrel_fit","[0]+[1]*x",0,31);
+  TF1* iso_vs_compressednTT_endcaps_fit = new TF1("iso_vs_compressednTT_endcaps_fit","[0]+[1]*x",0,31);
+
+  iso_vs_compressednTT_profile->Fit(iso_vs_compressednTT_fit);
+  iso_vs_compressednTT_barrel_profile->Fit(iso_vs_compressednTT_barrel_fit);
+  iso_vs_compressednTT_endcaps_profile->Fit(iso_vs_compressednTT_endcaps_fit);
+
 
   int   L1Tau_IEt      = -99;
   int   L1Tau_compressed_IEt      = -99;
@@ -76,8 +118,6 @@ void Build_Isolation_WPs()
   std::map<TString,TH1F*> Histos_PerBin ;
   std::map<Int_t,TH3F*> IsoCut_PerBin ;
   std::map<Int_t,std::map<TString,Int_t>> IsoCut_PerEfficiency_PerBin;
-  // std::map<TString,Int_t> IsoCut_PerBin_90pc ;
-  // std::map<TString,Int_t> IsoCut_PerBin_80pc ;
 
   for(UInt_t i = 0 ; i < NbinsIEta-1 ; ++i)
     {
@@ -116,16 +156,12 @@ void Build_Isolation_WPs()
 
   TProfile* hprof_IEt  = new TProfile("hprof_IEt","Profile L1_Iso vs. L1_IEt",100,0.,200.,0,20);
   TProfile* hprof_IEta  = new TProfile("hprof_IEta","Profile L1_Iso vs. L1_IEta",28,0.,28.,0,20);
-  TProfile* hprof_nTT  = new TProfile("hprof_nTT","Profile L1_Iso vs. L1_IEta",70,0.,70.,0,20);
+  TProfile* hprof_nTT  = new TProfile("hprof_nTT","Profile L1_Iso vs. L1_nTT",150,0.,150.,0,20);//70,0.,70.,0,20
 
   for(UInt_t i = 0 ; i < treeIn->GetEntries() ; ++i)
     {
       treeIn->GetEntry(i);
       if(OfflineTau_isMatched==0) continue;
-
-      //cout<<"supercompressedE = "<<supercompressedE<<endl;
-      //cout<<"L1Tau_compressed_IEta = "<<L1Tau_compressed_IEta<<endl;
-      //cout<<"L1Tau_nTT = "<<L1Tau_nTT<<endl;
 
       hprof_IEt->Fill(L1Tau_IEt,L1Tau_Iso,1);
       hprof_IEta->Fill(L1Tau_IEta,L1Tau_Iso,1);
@@ -155,12 +191,33 @@ void Build_Isolation_WPs()
       ss_k << binForIsolation.at(2);
       TString Appendix_k = TString(ss_k.str());
       Name_Histo += Appendix_k;
-
-      // cout<<"Name_Histo = "<<Name_Histo<<endl;
-
       Histos_PerBin[Name_Histo]->Fill(L1Tau_Iso);
     }
-  
+  /*
+  isoEt_vs_nVtx->Write();
+  isoEt_vs_nVtx_barrel->Write();
+  isoEt_vs_nVtx_endcaps->Write();
+
+  iso_vs_nvtx_profile->Write();
+  iso_vs_nvtx_barrel_profile->Write();
+  iso_vs_nvtx_endcaps_profile->Write();
+  */
+  isoEt_vs_nTT->Write();
+  isoEt_vs_nTT_barrel->Write();
+  isoEt_vs_nTT_endcaps->Write();
+
+  iso_vs_nTT_profile->Write();
+  iso_vs_nTT_barrel_profile->Write();
+  iso_vs_nTT_endcaps_profile->Write();
+
+  iso_vs_compressednTT_profile->Write();
+  iso_vs_compressednTT_barrel_profile->Write();
+  iso_vs_compressednTT_endcaps_profile->Write();
+
+  iso_vs_compressednTT_fit->Write();
+  iso_vs_compressednTT_barrel_fit->Write();
+  iso_vs_compressednTT_endcaps_fit->Write();
+
   hprof_IEt->Write();
   hprof_IEta->Write();
   hprof_nTT->Write();
@@ -252,47 +309,21 @@ void Build_Isolation_WPs()
 			{
 			  if(IsoCut_PerEfficiency_PerBin[iEff][Name_Histo]==-1)
 			    {
-			      //cout<<"Efficiency = "<<Efficiency<<", bin = "<<Name_Histo<<", cut = "<<iIso<<endl;
-			      //if(iEff==97) cout<<"IsoCut = "<<iIso<<endl;
 			      IsoCut_PerEfficiency_PerBin[iEff][Name_Histo]=iIso;
 			      IsoCut_PerBin[iEff]->SetBinContent(i+1,j+1,k+1,iIso);
-			      //cout<<"IsoCut_PerEfficiency_PerBin[iEff][Name_Histo] = "<<IsoCut_PerEfficiency_PerBin[iEff][Name_Histo]<<endl;
 			    }
 			}
 		    }
 		}
 
-	      // IsoCut_PerBin_90pc.insert(make_pair(Name_Histo,-1));
-	      // IsoCut_PerBin_80pc.insert(make_pair(Name_Histo,-1));
-
-	      // for(UInt_t iIso = 0 ; iIso < 100 ; ++iIso)
-	      // 	{
-	      // 	  // cout<<"testing iIso = "<<iIso<<endl;
-	      // 	  // cout<<"Histos_PerBin[Name_Histo]->Integral(1,iIso+1) = "<<Histos_PerBin[Name_Histo]->Integral(1,iIso+1)<<endl;
-	      // 	  // cout<<"Histos_PerBin[Name_Histo]->Integral(1,100+1) = "<<Histos_PerBin[Name_Histo]->Integral(1,100+1)<<endl;
-	      // 	  if(Histos_PerBin[Name_Histo]->Integral(1,iIso+1)/Histos_PerBin[Name_Histo]->Integral(1,100+1)>=0.9)
-	      // 	    {
-	      // 	      if(IsoCut_PerBin_90pc[Name_Histo]==-1) IsoCut_PerBin_90pc[Name_Histo]=Histos_PerBin[Name_Histo]->GetBinLowEdge(iIso+1);
-	      // 	    }
-	      // 	  if(Histos_PerBin[Name_Histo]->Integral(1,iIso+1)/Histos_PerBin[Name_Histo]->Integral(1,100+1)>=0.8)
-	      // 	    {
-	      // 	      if(IsoCut_PerBin_80pc[Name_Histo]==-1) IsoCut_PerBin_80pc[Name_Histo]=Histos_PerBin[Name_Histo]->GetBinLowEdge(iIso+1);
-	      // 	    }
-	      // 	}
-
-	      // cout<<"50% iso cut for "<<Name_Histo<<" is = "<<IsoCut_PerBin_90pc[Name_Histo]<<endl;
-
-	      //if(Histos_PerBin[Name_Histo]->GetEntries()<20)
 	      if(Histos_PerBin[Name_Histo]->GetEntries()<40)
 		{
 		  NumberOfHistosWithLowStats++;
-		  // cout<<"Histo "<<Name_Histo<<" has low stat.: "<<Histos_PerBin[Name_Histo]->GetEntries()<<endl;
 		}
 
 	      Histos_PerBin[Name_Histo]->Write();
 	    }
 	}
-
     }
 
   //Efficiency as function of pT
@@ -352,15 +383,11 @@ void Build_Isolation_WPs()
       treeIn->GetEntry(i);
       if(OfflineTau_isMatched==0) continue;
 
-      //cout<<"L1_IEta = "<<L1_IEta<<endl;
-      // if(i>10) continue;
-
       std::vector<Int_t> binForIsolation ;
       binForIsolation.clear();
       binForIsolation.push_back(L1Tau_compressed_IEta);
       binForIsolation.push_back(supercompressedE);
       binForIsolation.push_back(supercompressednTT);
-      //cout<<"nTT = "<<L1_nTT<<", bin = "<<binForIsolation.at(2)<<endl;
 
       TString Name_Histo = "Hist_";
 
@@ -389,22 +416,12 @@ void Build_Isolation_WPs()
 	      pt_pass_efficiency[iEff]->Fill(L1Tau_IEt);
 	      nTT_pass_efficiency[iEff]->Fill(L1Tau_nTT);
 	    }
-	  //cout<<"L1Tau_Iso = "<<L1Tau_Iso<<", cut from map = "<<IsoCut_PerEfficiency_PerBin[iEff][Name_Histo]<<", cut from histo = "<<IsoCut_PerBin[iEff]->GetBinContent(binForIsolation.at(0)+1,binForIsolation.at(1)+1,binForIsolation.at(2)+1)<<endl;
 	  if(L1Tau_Iso<=IsoCut_PerBin[iEff]->GetBinContent(binForIsolation.at(0)+1,binForIsolation.at(1)+1,binForIsolation.at(2)+1)) pt_pass_efficiency_TH3[iEff]->Fill(L1Tau_IEt);
-	  // if(L1Tau_Iso<=IsoCut_PerBin[iEff]->GetBinContent(binForIsolation.at(0)+1,binForIsolation.at(1)+1,binForIsolation.at(2)+1)) pt_pass_efficiency_TH3[iEff]->Fill(L1Tau_IEt);
 	}
-
-      // cout<<"IsoCut_PerEfficiency_PerBin[90][Name_Histo] = "<<IsoCut_PerEfficiency_PerBin[90][Name_Histo]<<endl;
-
-      // if(L1Tau_Iso<=IsoCut_PerEfficiency_PerBin[90][Name_Histo]) pt_pass_90pc->Fill(L1Tau_IEt);
-      // if(L1Tau_Iso<=IsoCut_PerEfficiency_PerBin[80][Name_Histo]) pt_pass_80pc->Fill(L1Tau_IEt);
       pt->Fill(L1Tau_IEt);
       eta->Fill(L1Tau_IEta);
       nTT->Fill(L1Tau_nTT);
-      
-
     }
-
 
   for(UInt_t iEff = 0 ; iEff < 101 ; ++iEff)
     {
@@ -453,6 +470,4 @@ void Build_Isolation_WPs()
   pt->Write();
   eta->Write();
   nTT->Write();
-
-  //cout<<"NumberOfHistosWithLowStats/Tot = "<<NumberOfHistosWithLowStats<<"/"<<NbinsIEta*NbinsIEt*NbinsnTT<<endl;
 }

@@ -32,6 +32,15 @@
   TH1F* rate_NewLayer1_Option20 = (TH1F*)fileIn.Get("rate_DiTau_Progression_20");
   TH1F* rate_NewLayer1_Option21 = (TH1F*)fileIn.Get("rate_DiTau_Progression_21");
   TH1F* rate_NewLayer1_Option22 = (TH1F*)fileIn.Get("rate_DiTau_Progression_22");
+  TH1F* rate_NewLayer1_Option23 = (TH1F*)fileIn.Get("rate_DiTau_Progression_23");
+  TH1F* rate_NewLayer1_Option24 = (TH1F*)fileIn.Get("rate_DiTau_Progression_24");
+  TH1F* rate_NewLayer1_Option25 = (TH1F*)fileIn.Get("rate_DiTau_Progression_25");
+  TH1F* rate_NewLayer1_Option26 = (TH1F*)fileIn.Get("rate_DiTau_Progression_26");
+  TH1F* rate_NewLayer1_Option27 = (TH1F*)fileIn.Get("rate_DiTau_Progression_27");
+  TH1F* rate_NewLayer1_Option28 = (TH1F*)fileIn.Get("rate_DiTau_Progression_28");
+  TH1F* rate_NewLayer1_Option29 = (TH1F*)fileIn.Get("rate_DiTau_Progression_29");
+  TH1F* rate_NewLayer1_Option30 = (TH1F*)fileIn.Get("rate_DiTau_Progression_30");
+  TH1F* rate_NewLayer1_Option31 = (TH1F*)fileIn.Get("rate_DiTau_Progression_31");
   TH1F* rate_NewLayer1_Option31_extrap = (TH1F*)fileIn.Get("rate_DiTau_Progression_31_extrap");
 
   TString CanvasName = fileName_Out;
@@ -64,25 +73,27 @@
   rate_NewLayer1_noIso->GetYaxis()->SetTitle("Rate [kHz]");
   rate_NewLayer1_noIso->Draw();
 
-  rate_NewLayer1_Option22->SetLineColor(kRed);
+  rate_NewLayer1_Option1->SetLineWidth(3);
+  rate_NewLayer1_Option1->SetLineColor(2);
+  rate_NewLayer1_Option1->Draw("same");
+
+  rate_NewLayer1_Option15->SetLineWidth(3);
+  rate_NewLayer1_Option15->SetLineColor(3);
+  rate_NewLayer1_Option15->Draw("same");
+
+
+  rate_NewLayer1_Option22->SetLineColor(4);
   rate_NewLayer1_Option22->SetLineWidth(3);
   rate_NewLayer1_Option22->Draw("same");
 
-  rate_NewLayer1_Option8->SetLineWidth(3);
-  rate_NewLayer1_Option8->SetLineColor(kGreen);
-  rate_NewLayer1_Option8->Draw("same");
-  
-  rate_NewLayer1_Option1->SetLineWidth(3);
-  rate_NewLayer1_Option1->SetLineColor(kMagenta);
-  rate_NewLayer1_Option1->Draw("same");
+  rate_NewLayer1_Option31->SetLineWidth(3);
+  rate_NewLayer1_Option31->SetLineColor(6);
+  rate_NewLayer1_Option31->Draw("same");
 
-  //rate_NewLayer1_Option2->SetLineWidth(3);
-  //rate_NewLayer1_Option2->SetLineColor(kBlue);
-  //rate_NewLayer1_Option2->Draw("same");
+  rate_NewLayer1_Option31_extrap->SetLineWidth(3);
+  rate_NewLayer1_Option31_extrap->SetLineColor(7);
+  rate_NewLayer1_Option31_extrap->Draw("same");
 
-  rate_NewLayer1_Option15->SetLineWidth(3);
-  rate_NewLayer1_Option15->SetLineColor(kCyan);
-  rate_NewLayer1_Option15->Draw("same");
 
   TPaveText* texl = new TPaveText(0.20,0.87,0.90,0.99,"NDC");
   //texl->AddText("CMS Internal, #sqrt{s}=13 TeV, Run #305310 (PU ~ 57)");
@@ -100,10 +111,10 @@
   //leg->SetHeader("Linearly scaled to 2.0E34");
   leg->AddEntry(rate_NewLayer1_noIso,"#bf{Di-#tau no-iso}","L");
   leg->AddEntry(rate_NewLayer1_Option1,"#bf{Di-#tau iso (Option 1)}","L");
-  //leg->AddEntry(rate_NewLayer1_Option2,"#bf{Di-#tau iso (Option 2)}","L");
-  leg->AddEntry(rate_NewLayer1_Option8,"#bf{Di-#tau iso (Option 8)}","L");
   leg->AddEntry(rate_NewLayer1_Option15,"#bf{Di-#tau iso (Option 15)}","L");
   leg->AddEntry(rate_NewLayer1_Option22,"#bf{Di-#tau iso (Option 22)}","L");
+  leg->AddEntry(rate_NewLayer1_Option31,"#bf{Di-#tau iso (Option 31)}","L");
+  leg->AddEntry(rate_NewLayer1_Option31_extrap,"#bf{Di-#tau iso (Option 31_extrap)}","L");
 
   TLine line(0., 18., 120., 18.);
   line.SetLineColor(kRed);
@@ -179,8 +190,8 @@
   c.SaveAs(CanvasNameRoot.Data());
 
     //find first threshold giving < 10 kHz.
-  Double_t Target = 14.;
-  // Double_t Target = 14.*1.8/2.0;
+  //Double_t Target = 14.;
+  Double_t Target = 26.; //14.*1.76;
   // Double_t Target = 14.;
 
   Double_t Threshold_NewLayer1_noIso = 0.;
@@ -206,6 +217,15 @@
   Double_t Threshold_NewLayer1_Option20 = 0.;
   Double_t Threshold_NewLayer1_Option21 = 0.;
   Double_t Threshold_NewLayer1_Option22 = 0.;
+  Double_t Threshold_NewLayer1_Option23 = 0.;
+  Double_t Threshold_NewLayer1_Option24 = 0.;
+  Double_t Threshold_NewLayer1_Option25 = 0.;
+  Double_t Threshold_NewLayer1_Option26 = 0.;
+  Double_t Threshold_NewLayer1_Option27 = 0.;
+  Double_t Threshold_NewLayer1_Option28 = 0.;
+  Double_t Threshold_NewLayer1_Option29 = 0.;
+  Double_t Threshold_NewLayer1_Option30 = 0.;
+  Double_t Threshold_NewLayer1_Option31 = 0.;
   Double_t Threshold_NewLayer1_Option31_extrap = 0.;
    
   for(UInt_t i = 1 ; i <= rate_NewLayer1_noIso->GetNbinsX() ; ++i)
@@ -409,12 +429,92 @@
 
   for(UInt_t i = 1 ; i <= rate_NewLayer1_Option22->GetNbinsX() ; ++i)
     {
-      // cout<<"rate_NewLayer1_Option22->GetBinContent(i) = "<<rate_NewLayer1_Option22->GetBinContent(i)<<endl;
       if(rate_NewLayer1_Option22->GetBinContent(i)<=Target)
       	{
       	  Threshold_NewLayer1_Option22 = rate_NewLayer1_Option22->GetBinLowEdge(i);
       	  break;
       	}
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option23->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option23->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option23 = rate_NewLayer1_Option23->GetBinLowEdge(i);
+          break;
+        }
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option24->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option24->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option24 = rate_NewLayer1_Option24->GetBinLowEdge(i);
+          break;
+        }
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option25->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option25->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option25 = rate_NewLayer1_Option25->GetBinLowEdge(i);
+          break;
+        }
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option26->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option26->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option26 = rate_NewLayer1_Option26->GetBinLowEdge(i);
+          break;
+        }
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option27->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option27->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option27 = rate_NewLayer1_Option27->GetBinLowEdge(i);
+          break;
+        }
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option28->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option28->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option28 = rate_NewLayer1_Option28->GetBinLowEdge(i);
+          break;
+        }
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option29->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option29->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option29 = rate_NewLayer1_Option29->GetBinLowEdge(i);
+          break;
+        }
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option30->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option30->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option30 = rate_NewLayer1_Option30->GetBinLowEdge(i);
+          break;
+        }
+    }
+
+  for(UInt_t i = 1 ; i <= rate_NewLayer1_Option31->GetNbinsX() ; ++i)
+    {
+      if(rate_NewLayer1_Option31->GetBinContent(i)<=Target)
+        {
+          Threshold_NewLayer1_Option31 = rate_NewLayer1_Option31->GetBinLowEdge(i);
+          break;
+        }
     }
 
   for(UInt_t i = 1 ; i <= rate_NewLayer1_Option31_extrap->GetNbinsX() ; ++i)
@@ -450,6 +550,15 @@
   cout<<"Double_t Threshold_NewLayer1_Option20 = "<<Threshold_NewLayer1_Option20-0.49<<";"<<endl;
   cout<<"Double_t Threshold_NewLayer1_Option21 = "<<Threshold_NewLayer1_Option21-0.49<<";"<<endl;
   cout<<"Double_t Threshold_NewLayer1_Option22 = "<<Threshold_NewLayer1_Option22-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option23 = "<<Threshold_NewLayer1_Option23-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option24 = "<<Threshold_NewLayer1_Option24-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option25 = "<<Threshold_NewLayer1_Option25-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option26 = "<<Threshold_NewLayer1_Option26-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option27 = "<<Threshold_NewLayer1_Option27-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option28 = "<<Threshold_NewLayer1_Option28-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option29 = "<<Threshold_NewLayer1_Option29-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option30 = "<<Threshold_NewLayer1_Option30-0.49<<";"<<endl;
+  cout<<"Double_t Threshold_NewLayer1_Option31 = "<<Threshold_NewLayer1_Option31-0.49<<";"<<endl;
   cout<<"Double_t Threshold_NewLayer1_Option31_extrap = "<<Threshold_NewLayer1_Option31_extrap-0.49<<";"<<endl;
   cout<<endl;
   cout<<"TString Threshold_NewLayer1_noIso = \""<<Threshold_NewLayer1_noIso<<"\";"<<endl;
@@ -475,5 +584,14 @@
   cout<<"TString Threshold_NewLayer1_Option20 = \""<<Threshold_NewLayer1_Option20<<"\";"<<endl;
   cout<<"TString Threshold_NewLayer1_Option21 = \""<<Threshold_NewLayer1_Option21<<"\";"<<endl;
   cout<<"TString Threshold_NewLayer1_Option22 = \""<<Threshold_NewLayer1_Option22<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option23 = \""<<Threshold_NewLayer1_Option23<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option24 = \""<<Threshold_NewLayer1_Option23<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option25 = \""<<Threshold_NewLayer1_Option25<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option26 = \""<<Threshold_NewLayer1_Option26<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option27 = \""<<Threshold_NewLayer1_Option27<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option28 = \""<<Threshold_NewLayer1_Option28<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option29 = \""<<Threshold_NewLayer1_Option29<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option30 = \""<<Threshold_NewLayer1_Option30<<"\";"<<endl;
+  cout<<"TString Threshold_NewLayer1_Option31 = \""<<Threshold_NewLayer1_Option31<<"\";"<<endl;
   cout<<"TString Threshold_NewLayer1_Option31_extrap = \""<<Threshold_NewLayer1_Option31_extrap<<"\";"<<endl;
 }

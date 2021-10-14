@@ -16,7 +16,6 @@
 #include <sstream>
 #include <TBranchElement.h>
 #include <fstream>
-//#include "../ApplyCalibration/ApplyCalibration.C"
 #include "/home/sbhowmik/L1TauTrigger/L1TauCalibration/L1TauCalibration/L1TauCalibration/ApplyCalibration/ApplyCalibration.C"
 using namespace std;
 
@@ -43,8 +42,8 @@ Double_t FindEfficiency_Progression(Double_t IEt, Double_t MinPt, Double_t Effic
 
 void Build_Isolation_Relaxation()
 {
-  TString fileName_In = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/Iso_LUTs_Distributions_MC_VBF_20210727.root";
-  TString fileName_Out = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/Iso_LUTs_Options_MC_VBF_20210727.root"; 
+  TString fileName_In = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20211009/Iso_LUTs_Distributions_MC_VBF_20211009.root";
+  TString fileName_Out = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20211009/Iso_LUTs_Options_MC_VBF_20211009.root";
 
   TFile fileIn(fileName_In.Data(),"READ");
   TFile fileOut(fileName_Out, "RECREATE");
@@ -60,6 +59,15 @@ void Build_Isolation_Relaxation()
       histosIsolation.insert(make_pair(TString(convert.str()),current_Histo));
     }  
 
+  TF1* extrap_function_barrel = (TF1*)fileIn.Get("iso_vs_compressednTT_barrel_fit");
+  TF1* extrap_function_endcaps = (TF1*)fileIn.Get("iso_vs_compressednTT_endcaps_fit");
+
+  Float_t par0_barrel = extrap_function_barrel->GetParameter(0);
+  Float_t par1_barrel = 1.1;
+
+  Float_t par0_endcaps = extrap_function_endcaps->GetParameter(0);
+  Float_t par1_endcaps = 1.0;
+
   TH3F* LUT_Progression_1 = new TH3F("LUT_Progression_1","LUT_Progression_1",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
   TH3F* LUT_Progression_2 = new TH3F("LUT_Progression_2","LUT_Progression_2",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
   TH3F* LUT_Progression_3 = new TH3F("LUT_Progression_3","LUT_Progression_3",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
@@ -70,7 +78,6 @@ void Build_Isolation_Relaxation()
   TH3F* LUT_Progression_8 = new TH3F("LUT_Progression_8","LUT_Progression_8",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
   TH3F* LUT_Progression_9 = new TH3F("LUT_Progression_9","LUT_Progression_9",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
   TH3F* LUT_Progression_10 = new TH3F("LUT_Progression_10","LUT_Progression_10",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
-
   TH3F* LUT_Progression_11 = new TH3F("LUT_Progression_11","LUT_Progression_11",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
   TH3F* LUT_Progression_12 = new TH3F("LUT_Progression_12","LUT_Progression_12",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
   TH3F* LUT_Progression_13 = new TH3F("LUT_Progression_13","LUT_Progression_13",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
@@ -83,6 +90,16 @@ void Build_Isolation_Relaxation()
   TH3F* LUT_Progression_20 = new TH3F("LUT_Progression_20","LUT_Progression_20",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
   TH3F* LUT_Progression_21 = new TH3F("LUT_Progression_21","LUT_Progression_21",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
   TH3F* LUT_Progression_22 = new TH3F("LUT_Progression_22","LUT_Progression_22",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_23 = new TH3F("LUT_Progression_23","LUT_Progression_23",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_24 = new TH3F("LUT_Progression_24","LUT_Progression_24",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_25 = new TH3F("LUT_Progression_25","LUT_Progression_25",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_26 = new TH3F("LUT_Progression_26","LUT_Progression_26",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_27 = new TH3F("LUT_Progression_27","LUT_Progression_27",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_28 = new TH3F("LUT_Progression_28","LUT_Progression_28",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_29 = new TH3F("LUT_Progression_29","LUT_Progression_29",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_30 = new TH3F("LUT_Progression_30","LUT_Progression_30",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_31 = new TH3F("LUT_Progression_31","LUT_Progression_31",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
+  TH3F* LUT_Progression_31_extrap = new TH3F("LUT_Progression_31_extrap","LUT_Progression_31_extrap",NbinsIEta-1,0,NbinsIEta-1,NbinsIEt2-1,0,NbinsIEt2-1,NbinsnTT2-1,0,NbinsnTT2-1);
 
   std::vector<TH3F*> LUT_WP ;
   for(UInt_t iEff = 0 ; iEff <= 100 ; ++iEff)
@@ -111,11 +128,8 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_1 << Int_Efficiency_Progression_1 ;
 	      TString Result_Progression_1 = TString(convert_Progression_1.str());
 	      Int_t IsoCut_Progression_1 = histosIsolation[Result_Progression_1]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_1 = histosIsolation[Result_Progression_1]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_1==100) IsoCut_Progression_1 = 1000;
 	      LUT_Progression_1->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_1);
-
-	      //	      cout<<"after progression 1"<<endl;
 
 	      //Progression_2
 	      Double_t Efficiency_Progression_2 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 25., 0.4, 50.);
@@ -125,11 +139,8 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_2 << Int_Efficiency_Progression_2 ;
 	      TString Result_Progression_2 = TString(convert_Progression_2.str());
 	      Int_t IsoCut_Progression_2 = histosIsolation[Result_Progression_2]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_2 = histosIsolation[Result_Progression_2]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_2==100) IsoCut_Progression_2 = 1000;
 	      LUT_Progression_2->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_2);
-
-	      //	      cout<<"after progression 2"<<endl;
 
 	      //Progression_3
 	      Double_t Efficiency_Progression_3 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 25., 0.5, 50.);
@@ -139,10 +150,8 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_3 << Int_Efficiency_Progression_3 ;
 	      TString Result_Progression_3 = TString(convert_Progression_3.str());
 	      Int_t IsoCut_Progression_3 = histosIsolation[Result_Progression_3]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_3 = histosIsolation[Result_Progression_3]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_3==100) IsoCut_Progression_3 = 1000;
 	      LUT_Progression_3->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_3);
-
 
 	      //Progression_4
 	      Double_t Efficiency_Progression_4 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 25., 0.6, 50.);
@@ -152,18 +161,8 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_4 << Int_Efficiency_Progression_4 ;
 	      TString Result_Progression_4 = TString(convert_Progression_4.str());
 	      Int_t IsoCut_Progression_4 = histosIsolation[Result_Progression_4]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_4 = histosIsolation[Result_Progression_4]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_4==100) IsoCut_Progression_4 = 1000;
 	      LUT_Progression_4->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_4);
-
-	      // if(j==3)
-	      // 	{
-	      // 	  cout<<"iet bin (4 bits) = "<<FindBinCorrespondenceIEt(hardcodedIetBins2[j])<<endl;
-	      // 	  cout<<"iet bin (6 bits) = "<<j<<endl;
-	      // 	  cout<<"ieta bin = "<<i<<endl;
-	      // 	  cout<<"nTT bin = "<<k<<endl;
-	      // 	  cout<<"iso = "<<IsoCut_Progression_4<<endl;
-	      // 	}
 
 	      //Progression_5
 	      Double_t Efficiency_Progression_5 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 25., 0.7, 50.);
@@ -173,7 +172,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_5 << Int_Efficiency_Progression_5 ;
 	      TString Result_Progression_5 = TString(convert_Progression_5.str());
 	      Int_t IsoCut_Progression_5 = histosIsolation[Result_Progression_5]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_5 = histosIsolation[Result_Progression_5]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_5==100) IsoCut_Progression_5 = 1000;
 	      LUT_Progression_5->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_5);
 
@@ -185,11 +183,8 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_6 << Int_Efficiency_Progression_6 ;
 	      TString Result_Progression_6 = TString(convert_Progression_6.str());
 	      Int_t IsoCut_Progression_6 = histosIsolation[Result_Progression_6]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_6 = histosIsolation[Result_Progression_6]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_6==100) IsoCut_Progression_6 = 1000;
 	      LUT_Progression_6->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_6);
-
-	      //	      cout<<"after progression 6"<<endl;
 
 	      //Progression_7
 	      Double_t Efficiency_Progression_7 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 25., 0.5, 40.);
@@ -199,7 +194,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_7 << Int_Efficiency_Progression_7 ;
 	      TString Result_Progression_7 = TString(convert_Progression_7.str());
 	      Int_t IsoCut_Progression_7 = histosIsolation[Result_Progression_7]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_7 = histosIsolation[Result_Progression_7]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_7==100) IsoCut_Progression_7 = 1000;
 	      LUT_Progression_7->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_7);
 
@@ -211,7 +205,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_8 << Int_Efficiency_Progression_8 ;
 	      TString Result_Progression_8 = TString(convert_Progression_8.str());
 	      Int_t IsoCut_Progression_8 = histosIsolation[Result_Progression_8]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_8 = histosIsolation[Result_Progression_8]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_8==100) IsoCut_Progression_8 = 1000;
 	      LUT_Progression_8->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_8);
 
@@ -223,7 +216,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_9 << Int_Efficiency_Progression_9 ;
 	      TString Result_Progression_9 = TString(convert_Progression_9.str());
 	      Int_t IsoCut_Progression_9 = histosIsolation[Result_Progression_9]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_9 = histosIsolation[Result_Progression_9]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_9==100) IsoCut_Progression_9 = 1000;
 	      LUT_Progression_9->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_9);
 
@@ -235,7 +227,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_10 << Int_Efficiency_Progression_10 ;
 	      TString Result_Progression_10 = TString(convert_Progression_10.str());
 	      Int_t IsoCut_Progression_10 = histosIsolation[Result_Progression_10]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_10 = histosIsolation[Result_Progression_10]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_10==100) IsoCut_Progression_10 = 1000;
 	      LUT_Progression_10->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_10);
 
@@ -247,11 +238,8 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_11 << Int_Efficiency_Progression_11 ;
 	      TString Result_Progression_11 = TString(convert_Progression_11.str());
 	      Int_t IsoCut_Progression_11 = histosIsolation[Result_Progression_11]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_11 = histosIsolation[Result_Progression_11]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_11==100) IsoCut_Progression_11 = 1000;
 	      LUT_Progression_11->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_11);
-
-	      //	      cout<<"after progression 11"<<endl;
 
 	      //Progression_12
 	      Double_t Efficiency_Progression_12 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.7, 35.);
@@ -261,7 +249,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_12 << Int_Efficiency_Progression_12 ;
 	      TString Result_Progression_12 = TString(convert_Progression_12.str());
 	      Int_t IsoCut_Progression_12 = histosIsolation[Result_Progression_12]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_12 = histosIsolation[Result_Progression_12]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_12==100) IsoCut_Progression_12 = 1000;
 	      LUT_Progression_12->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_12);
 
@@ -273,7 +260,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_13 << Int_Efficiency_Progression_13 ;
 	      TString Result_Progression_13 = TString(convert_Progression_13.str());
 	      Int_t IsoCut_Progression_13 = histosIsolation[Result_Progression_13]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_13 = histosIsolation[Result_Progression_13]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_13==100) IsoCut_Progression_13 = 1000;
 	      LUT_Progression_13->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_13);
 
@@ -285,7 +271,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_14 << Int_Efficiency_Progression_14 ;
 	      TString Result_Progression_14 = TString(convert_Progression_14.str());
 	      Int_t IsoCut_Progression_14 = histosIsolation[Result_Progression_14]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_14 = histosIsolation[Result_Progression_14]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_14==100) IsoCut_Progression_14 = 1000;
 	      LUT_Progression_14->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_14);
 
@@ -297,23 +282,17 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_15 << Int_Efficiency_Progression_15 ;
 	      TString Result_Progression_15 = TString(convert_Progression_15.str());
 	      Int_t IsoCut_Progression_15 = histosIsolation[Result_Progression_15]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_15 = histosIsolation[Result_Progression_15]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_15==100) IsoCut_Progression_15 = 1000;
 	      LUT_Progression_15->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_15);
 
-	      //	      cout<<"after progression 15"<<endl;
-
 	      //Progression_16
 	      Double_t Efficiency_Progression_16 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 23., 0., 30.);
-	      // Double_t Efficiency_Progression_16 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0., 30.);
-	      //cout<<"Efficiency_Progression_16 = "<<Efficiency_Progression_16<<endl;
 	      if(Efficiency_Progression_16>=0.9999) Efficiency_Progression_16 = 1.0001;
 	      Int_t Int_Efficiency_Progression_16 = int(Efficiency_Progression_16*100);
 	      ostringstream convert_Progression_16;
 	      convert_Progression_16 << Int_Efficiency_Progression_16 ;
 	      TString Result_Progression_16 = TString(convert_Progression_16.str());
 	      Int_t IsoCut_Progression_16 = histosIsolation[Result_Progression_16]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_16 = histosIsolation[Result_Progression_16]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_16==100) IsoCut_Progression_16 = 1000;
 	      LUT_Progression_16->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_16);
 
@@ -325,7 +304,6 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_17 << Int_Efficiency_Progression_17 ;
 	      TString Result_Progression_17 = TString(convert_Progression_17.str());
 	      Int_t IsoCut_Progression_17 = histosIsolation[Result_Progression_17]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_17 = histosIsolation[Result_Progression_17]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_17==100) IsoCut_Progression_17 = 1000;
 	      LUT_Progression_17->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_17);
 
@@ -337,21 +315,17 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_18 << Int_Efficiency_Progression_18 ;
 	      TString Result_Progression_18 = TString(convert_Progression_18.str());
 	      Int_t IsoCut_Progression_18 = histosIsolation[Result_Progression_18]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_18 = histosIsolation[Result_Progression_18]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_18==100) IsoCut_Progression_18 = 1000;
 	      LUT_Progression_18->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_18);
 	      
-	      
 	      //Progression_19
 	      Double_t Efficiency_Progression_19 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 15., 0., 35.);
-	      //cout<<"Efficiency_Progression_19 = "<<Efficiency_Progression_19<<endl;
 	      if(Efficiency_Progression_19>=0.9999) Efficiency_Progression_19 = 1.0001;
 	      Int_t Int_Efficiency_Progression_19 = int(Efficiency_Progression_19*100);
 	      ostringstream convert_Progression_19;
 	      convert_Progression_19 << Int_Efficiency_Progression_19 ;
 	      TString Result_Progression_19 = TString(convert_Progression_19.str());
 	      Int_t IsoCut_Progression_19 = histosIsolation[Result_Progression_19]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_19 = histosIsolation[Result_Progression_19]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_19==100) IsoCut_Progression_19 = 1000;
 	      LUT_Progression_19->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_19);
 
@@ -363,69 +337,147 @@ void Build_Isolation_Relaxation()
 	      convert_Progression_20 << Int_Efficiency_Progression_20 ;
 	      TString Result_Progression_20 = TString(convert_Progression_20.str());
 	      Int_t IsoCut_Progression_20 = histosIsolation[Result_Progression_20]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_20 = histosIsolation[Result_Progression_20]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_20==100) IsoCut_Progression_20 = 1000;
 	      LUT_Progression_20->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_20);
 
-	      //	      cout<<"after progression 20"<<endl;
-
 	      //Progression_21
-	      //cout<<"i = "<<i<<endl;
-	      //	      cout<<"j = "<<j<<endl;
-	      //	      cout<<"k = "<<k<<endl;
 	      Double_t Efficiency_Progression_21 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.80, 50.);
 	      if(Efficiency_Progression_21>=0.9999) Efficiency_Progression_21 = 1.0001;
 	      Int_t Int_Efficiency_Progression_21 = int(Efficiency_Progression_21*100);
-	      //	      cout<<"Int_Efficiency_Progression_21 = "<<Int_Efficiency_Progression_21<<endl;
 	      ostringstream convert_Progression_21;
 	      convert_Progression_21 << Int_Efficiency_Progression_21 ;
 	      TString Result_Progression_21 = TString(convert_Progression_21.str());
 	      Int_t IsoCut_Progression_21 = histosIsolation[Result_Progression_21]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_21 = histosIsolation[Result_Progression_21]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_21==100) IsoCut_Progression_21 = 1000;
-	      //	      cout<<"IsoCut_Progression_21 = "<<IsoCut_Progression_21<<endl;
-
-	      if(hardcodedIetBins2[j]/2.>30.&&hardcodedIetBins2[j]/2.<55. && k==10 && i==0)
-		{
-		  //cout<<"ieta bin = "<<i<<endl;
-		  //cout<<"pT bin = "<<j<<endl;
-		  //cout<<"nTT bin = "<<k<<endl;
-
-		  //cout<<"looking for..."<<endl;
-		  //cout<<"ieta bin = "<<i<<endl;
-		  //cout<<"pT bin = "<<j<<endl;
-		  //cout<<"nTT bin = "<<k<<endl;
-
-		  //cout<<"pT = "<<hardcodedIetBins2[j]/2.<<endl;
-		  // cout<<"pT = "<<hardcodedIetBins[FindBinCorrespondenceIEt((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2.)]/2.<<endl;
-		  //cout<<"Target efficiency = "<<Efficiency_Progression_5<<endl;
-		  //cout<<"Isolation cut = "<<IsoCut_Progression_5<<endl;
-		  //cout<<"--"<<endl;
-		}
-	      
-	      if(IsoCut_Progression_21==0)
-		{
-		  //cout<<"j compressed = "<<FindBinCorrespondenceIEt(hardcodedIetBins2[j])<<endl;
-		  //cout<<"k compressed = "<<FindBinCorrespondencenTT(hardcodednTTBins2[k])<<endl;
-		}
 	      LUT_Progression_21->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_21);
 
 	      Double_t Efficiency_Progression_22 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 25., 0.70, 70.);
-	      //cout<<"Bin j = "<<j<<", TargetEfficiency = "<<Efficiency_Progression_22<<endl;
-	      // Double_t Efficiency_Progression_22 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.60, 80.);
 	      if(Efficiency_Progression_22>=0.9999) Efficiency_Progression_22 = 1.0001;
 	      Int_t Int_Efficiency_Progression_22 = int(Efficiency_Progression_22*100);
 	      ostringstream convert_Progression_22;
 	      convert_Progression_22 << Int_Efficiency_Progression_22 ;
 	      TString Result_Progression_22 = TString(convert_Progression_22.str());
 	      Int_t IsoCut_Progression_22 = histosIsolation[Result_Progression_22]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
-	      if(k<12) IsoCut_Progression_22 = histosIsolation[Result_Progression_22]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[12])+1);
 	      if(Int_Efficiency_Progression_22==100) IsoCut_Progression_22 = 1000;
 	      if(i==1) cout<<"i = "<<i<<", j = "<<j<<", k = "<<k<<", cut = "<<IsoCut_Progression_22<<endl;
-
 	      LUT_Progression_22->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_22);
 
-	      //	      cout<<"after progression 21"<<endl;
+              Double_t Efficiency_Progression_23 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.60, 70.);
+              if(Efficiency_Progression_23>=0.9999) Efficiency_Progression_23 = 1.0001;
+              Int_t Int_Efficiency_Progression_23 = int(Efficiency_Progression_23*100);
+              ostringstream convert_Progression_23;
+              convert_Progression_23 << Int_Efficiency_Progression_23 ;
+              TString Result_Progression_23 = TString(convert_Progression_23.str());
+              Int_t IsoCut_Progression_23 = histosIsolation[Result_Progression_23]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_23==100) IsoCut_Progression_23 = 1000;
+              LUT_Progression_23->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_23);
+
+              Double_t Efficiency_Progression_24 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.50, 70.);
+              if(Efficiency_Progression_24>=0.9999) Efficiency_Progression_24 = 1.0001;
+              Int_t Int_Efficiency_Progression_24 = int(Efficiency_Progression_24*100);
+              ostringstream convert_Progression_24;
+              convert_Progression_24 << Int_Efficiency_Progression_24 ;
+              TString Result_Progression_24 = TString(convert_Progression_24.str());
+              Int_t IsoCut_Progression_24 = histosIsolation[Result_Progression_24]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_24==100) IsoCut_Progression_24 = 1000;
+              LUT_Progression_24->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_24);
+
+              Double_t Efficiency_Progression_25 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.20, 50.);
+              if(Efficiency_Progression_25>=0.9999) Efficiency_Progression_25 = 1.0001;
+              Int_t Int_Efficiency_Progression_25 = int(Efficiency_Progression_25*100);
+              ostringstream convert_Progression_25;
+              convert_Progression_25 << Int_Efficiency_Progression_25 ;
+              TString Result_Progression_25 = TString(convert_Progression_25.str());
+              Int_t IsoCut_Progression_25 = histosIsolation[Result_Progression_25]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_25==100) IsoCut_Progression_25 = 1000;
+              LUT_Progression_25->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_25);
+
+              Double_t Efficiency_Progression_26 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.40, 70.);
+              if(Efficiency_Progression_26>=0.9999) Efficiency_Progression_26 = 1.0001;
+              Int_t Int_Efficiency_Progression_26 = int(Efficiency_Progression_26*100);
+              ostringstream convert_Progression_26;
+              convert_Progression_26 << Int_Efficiency_Progression_26 ;
+              TString Result_Progression_26 = TString(convert_Progression_26.str());
+              Int_t IsoCut_Progression_26 = histosIsolation[Result_Progression_26]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_26==100) IsoCut_Progression_26 = 1000;
+              LUT_Progression_26->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_26);
+
+              Double_t Efficiency_Progression_27 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.50, 50.);
+              if(Efficiency_Progression_27>=0.9999) Efficiency_Progression_27 = 1.0001;
+              Int_t Int_Efficiency_Progression_27 = int(Efficiency_Progression_27*100);
+              ostringstream convert_Progression_27;
+              convert_Progression_27 << Int_Efficiency_Progression_27 ;
+              TString Result_Progression_27 = TString(convert_Progression_27.str());
+              Int_t IsoCut_Progression_27 = histosIsolation[Result_Progression_27]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_27==100) IsoCut_Progression_27 = 1000;
+              LUT_Progression_27->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_27);
+
+              Double_t Efficiency_Progression_28 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.60, 80.);
+              if(Efficiency_Progression_28>=0.9999) Efficiency_Progression_28 = 1.0001;
+              Int_t Int_Efficiency_Progression_28 = int(Efficiency_Progression_28*100);
+              ostringstream convert_Progression_28;
+              convert_Progression_28 << Int_Efficiency_Progression_28 ;
+              TString Result_Progression_28 = TString(convert_Progression_28.str());
+              Int_t IsoCut_Progression_28 = histosIsolation[Result_Progression_28]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_28==100) IsoCut_Progression_28 = 1000;
+              LUT_Progression_28->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_28);
+
+              Double_t Efficiency_Progression_29 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.50, 60.);
+              if(Efficiency_Progression_29>=0.9999) Efficiency_Progression_29 = 1.0001;
+              Int_t Int_Efficiency_Progression_29 = int(Efficiency_Progression_29*100);
+              ostringstream convert_Progression_29;
+              convert_Progression_29 << Int_Efficiency_Progression_29 ;
+              TString Result_Progression_29 = TString(convert_Progression_29.str());
+              Int_t IsoCut_Progression_29 = histosIsolation[Result_Progression_29]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_29==100) IsoCut_Progression_29 = 1000;
+              LUT_Progression_29->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_29);
+              Double_t Efficiency_Progression_30 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 20., 0.30, 50.);
+              if(Efficiency_Progression_30>=0.9999) Efficiency_Progression_30 = 1.0001;
+              Int_t Int_Efficiency_Progression_30 = int(Efficiency_Progression_30*100);
+              ostringstream convert_Progression_30;
+              convert_Progression_30 << Int_Efficiency_Progression_30 ;
+              TString Result_Progression_30 = TString(convert_Progression_30.str());
+              Int_t IsoCut_Progression_30 = histosIsolation[Result_Progression_30]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_30==100) IsoCut_Progression_30 = 1000;
+              LUT_Progression_30->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_30);
+
+              Double_t Efficiency_Progression_31 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 25., 0.78, 70.);
+              if(Efficiency_Progression_31>=0.9999) Efficiency_Progression_31 = 1.0001;
+              Int_t Int_Efficiency_Progression_31 = int(Efficiency_Progression_31*100);
+              if(Int_Efficiency_Progression_31<99 && (i+1)==4) Int_Efficiency_Progression_31 = Int_Efficiency_Progression_31-10;
+              ostringstream convert_Progression_31;
+              convert_Progression_31 << Int_Efficiency_Progression_31 ;
+              TString Result_Progression_31 = TString(convert_Progression_31.str());
+              Int_t IsoCut_Progression_31 = histosIsolation[Result_Progression_31]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[k])+1);
+              if(Int_Efficiency_Progression_31==100) IsoCut_Progression_31 = 1000;
+              Float_t RelaxingParameter = 1.;
+              Int_t StartingFrom = 18;
+              if(k+1<=StartingFrom) LUT_Progression_31->SetBinContent(i+1,j+1,k+1,IsoCut_Progression_31);
+              else  LUT_Progression_31->SetBinContent(i+1,j+1,k+1,Int_t(IsoCut_Progression_31+RelaxingParameter*(k+1-StartingFrom)));
+
+              Double_t Efficiency_Progression_31_bin15 = FindEfficiency_Progression((hardcodedIetBins2[j]+hardcodedIetBins2[j+1])/2., 30., 0.84, 75.);
+              if(Efficiency_Progression_31_bin15>=0.9999) Efficiency_Progression_31_bin15 = 1.0001;
+              Int_t Int_Efficiency_Progression_31_bin15 = int(Efficiency_Progression_31_bin15*100);
+              if(Int_Efficiency_Progression_31_bin15<99 && (i+1)==4) Int_Efficiency_Progression_31_bin15 = Int_Efficiency_Progression_31_bin15-6;
+              if((j+1)<20) Int_Efficiency_Progression_31_bin15 = Int_Efficiency_Progression_31_bin15-10;
+              ostringstream convert_Progression_31_bin15;
+              convert_Progression_31_bin15 << Int_Efficiency_Progression_31_bin15 ;
+              TString Result_Progression_31_bin15 = TString(convert_Progression_31_bin15.str());
+              Int_t IsoCut_Progression_31_bin15 = histosIsolation[Result_Progression_31_bin15]->GetBinContent(i+1,FindBinCorrespondenceIEt(hardcodedIetBins2[j])+1,FindBinCorrespondencenTT(hardcodednTTBins2[15])+1);
+              //barrel
+              if((i+1)!=4 && j+1!=32)
+                {
+                  LUT_Progression_31_extrap->SetBinContent(i+1,j+1,k+1,Int_t(IsoCut_Progression_31_bin15+par1_barrel*(k-15)));
+                }
+              else if((i+1)==4 && j+1!=32)
+                {
+                  LUT_Progression_31_extrap->SetBinContent(i+1,j+1,k+1,Int_t(IsoCut_Progression_31_bin15+par1_endcaps*(k-15)));
+                }
+              else
+                {
+                  LUT_Progression_31_extrap->SetBinContent(i+1,j+1,k+1,1000);
+                }
+
 
 	      // LUT_WP
 
@@ -471,6 +523,37 @@ void Build_Isolation_Relaxation()
   LUT_Progression_20->Write();
   LUT_Progression_21->Write();
   LUT_Progression_22->Write();
+  LUT_Progression_23->Write();
+  LUT_Progression_24->Write();
+  LUT_Progression_25->Write();
+  LUT_Progression_26->Write();
+  LUT_Progression_27->Write();
+  LUT_Progression_28->Write();
+  LUT_Progression_29->Write();
+  LUT_Progression_30->Write();
+
+  for(Int_t i = 0 ; i < NbinsIEta-1 ; ++i)
+    {
+      for(Int_t j = 1 ; j < NbinsIEt2-1 ; ++j)
+        {
+          for(Int_t k = 0 ; k < NbinsnTT2-1 ; ++k)
+	    // for(Int_t k = 0 ; k < NbinsnTT-1 ; ++k)                                                                                                                                                        
+            {
+              if(LUT_Progression_31_extrap->GetBinContent(i+1,j+1,k+1)<LUT_Progression_31_extrap->GetBinContent(i+1,j,k+1))
+                {
+                  LUT_Progression_31_extrap->SetBinContent(i+1,j+1,k+1,LUT_Progression_31_extrap->GetBinContent(i+1,j,k+1));
+                }
+              if(LUT_Progression_31->GetBinContent(i+1,j+1,k+1)<LUT_Progression_31->GetBinContent(i+1,j,k+1))
+                {
+                  LUT_Progression_31->SetBinContent(i+1,j+1,k+1,LUT_Progression_31->GetBinContent(i+1,j,k+1));
+                }
+            }
+
+        }
+
+    }
+  LUT_Progression_31->Write();
+  LUT_Progression_31_extrap->Write();
 
   for(UInt_t iEff = 0 ; iEff < 101 ; ++iEff)
     {

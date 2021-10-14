@@ -19,18 +19,16 @@
 #include <TGraphAsymmErrors.h>
 #include <stdio.h>
 #include <math.h>
-//#include "../ApplyCalibration/ApplyCalibration.C"
 #include "/home/sbhowmik/L1TauTrigger/L1TauCalibration/L1TauCalibration/L1TauCalibration/ApplyCalibration/ApplyCalibration.C"
 
 using namespace std;
 
 void ApplyIsolationForTurnOns(Bool_t nTTRange = kTRUE)
 {
-  TString fileName_In = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauCalibration_20210727/rootTree_calibratedOutput_MC_VBF_20210727.root";
+  TString fileName_In = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauCalibration_20211009/rootTree_calibratedOutput_MC_VBF_20211009.root";
   TString treeName_In = "outTreeForCalibration";
-  TString fileName_LUT = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/Iso_LUTs_Options_MC_VBF_20210727.root";
-  TString fileName_Out = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20210727/hist_turnOns_2021Calibration_2021IsoLUT_MC_VBF_20210727.root";
-
+  TString fileName_LUT = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20211009/Iso_LUTs_Options_MC_VBF_20211009.root";
+  TString fileName_Out = "/home/sbhowmik/RootTree/L1TauTrigger/Run3/L1TauIsolation_20211009/hist_turnOns_2021Calibration_2021IsoLUT_MC_VBF_20211009.root";
   TFile fileIn(fileName_In.Data(),"READ");
   TTree* treeIn = (TTree*)fileIn.Get(treeName_In);
   TFile fileLUT(fileName_LUT.Data(),"READ");
@@ -47,7 +45,7 @@ void ApplyIsolationForTurnOns(Bool_t nTTRange = kTRUE)
       histosIsolation.insert(make_pair(CurrentNameHisto,current_Histo));
     }  
 
-  for(UInt_t i = 1 ; i < 23 ; ++i)
+  for(UInt_t i = 1 ; i < 32 ; ++i)
     {
       TString CurrentNameHisto = "LUT_Progression_";
       ostringstream convert;
@@ -56,9 +54,9 @@ void ApplyIsolationForTurnOns(Bool_t nTTRange = kTRUE)
       TH3F* current_Histo = (TH3F*)fileLUT.Get(CurrentNameHisto.Data());
       histosIsolation.insert(make_pair(CurrentNameHisto,current_Histo));
     }  
-  //TString CurrentNameHisto = "LUT_Progression_31_extrap";
-  //TH3F* current_Histo = (TH3F*)fileLUT.Get(CurrentNameHisto.Data());
-  //histosIsolation.insert(make_pair(CurrentNameHisto,current_Histo));
+  TString CurrentNameHisto = "LUT_Progression_31_extrap";
+  TH3F* current_Histo = (TH3F*)fileLUT.Get(CurrentNameHisto.Data());
+  histosIsolation.insert(make_pair(CurrentNameHisto,current_Histo));
 
   Int_t           in_L1Tau_IEta;
   Int_t           in_L1Tau_hasEM;
@@ -127,58 +125,50 @@ void ApplyIsolationForTurnOns(Bool_t nTTRange = kTRUE)
   TH1F* pt_pass_Option20  = new TH1F("pt_pass_Option20" ,"pt_pass_Option20" ,21,binning);
   TH1F* pt_pass_Option21  = new TH1F("pt_pass_Option21" ,"pt_pass_Option21" ,21,binning);
   TH1F* pt_pass_Option22  = new TH1F("pt_pass_Option22" ,"pt_pass_Option22" ,21,binning);
+  TH1F* pt_pass_Option23  = new TH1F("pt_pass_Option23" ,"pt_pass_Option23" ,21,binning);
+  TH1F* pt_pass_Option24  = new TH1F("pt_pass_Option24" ,"pt_pass_Option24" ,21,binning);
+  TH1F* pt_pass_Option25  = new TH1F("pt_pass_Option25" ,"pt_pass_Option25" ,21,binning);
+  TH1F* pt_pass_Option26  = new TH1F("pt_pass_Option26" ,"pt_pass_Option26" ,21,binning);
+  TH1F* pt_pass_Option27  = new TH1F("pt_pass_Option27" ,"pt_pass_Option27" ,21,binning);
+  TH1F* pt_pass_Option28  = new TH1F("pt_pass_Option28" ,"pt_pass_Option28" ,21,binning);
+  TH1F* pt_pass_Option29  = new TH1F("pt_pass_Option29" ,"pt_pass_Option29" ,21,binning);
+  TH1F* pt_pass_Option30  = new TH1F("pt_pass_Option30" ,"pt_pass_Option30" ,21,binning);
+  TH1F* pt_pass_Option31  = new TH1F("pt_pass_Option31" ,"pt_pass_Option31" ,21,binning);
   TH1F* pt_pass_Option31_extrap  = new TH1F("pt_pass_Option31_extrap" ,"pt_pass_Option31_extrap" ,21,binning);
 
-  Double_t Threshold_NewLayer1_noIso   = 45.51;
-  Double_t Threshold_NewLayer1_Option1 = 44.51;
-  Double_t Threshold_NewLayer1_Option2 = 44.51;
-  Double_t Threshold_NewLayer1_Option3 = 44.51;
-  Double_t Threshold_NewLayer1_Option4 = 45.51;
-  Double_t Threshold_NewLayer1_Option5 = 45.51;
-  Double_t Threshold_NewLayer1_Option6 = 45.51;
-  Double_t Threshold_NewLayer1_Option7 = 45.51;
-  Double_t Threshold_NewLayer1_Option8 = 34.51;
-  Double_t Threshold_NewLayer1_Option9 = 45.51;
-  Double_t Threshold_NewLayer1_Option10 = 45.51;
-  Double_t Threshold_NewLayer1_Option11 = 45.51;
-  Double_t Threshold_NewLayer1_Option12 = 45.51;
-  Double_t Threshold_NewLayer1_Option13 = 45.51;
-  Double_t Threshold_NewLayer1_Option14 = 45.51;
-  Double_t Threshold_NewLayer1_Option15 = 45.51;
-  Double_t Threshold_NewLayer1_Option16 = 45.51;
-  Double_t Threshold_NewLayer1_Option17 = 45.51;
-  Double_t Threshold_NewLayer1_Option18 = 45.51;
-  Double_t Threshold_NewLayer1_Option19 = 45.51;
-  Double_t Threshold_NewLayer1_Option20 = 45.51;
-  Double_t Threshold_NewLayer1_Option21 = 45.51;
-  Double_t Threshold_NewLayer1_Option22 = 34.51;
-  Double_t Threshold_NewLayer1_Option31_extrap = -0.49;
-  /*
-  Double_t Threshold_NewLayer1_noIso   = 37.51;
-  Double_t Threshold_NewLayer1_Option1 = 25.51;
-  Double_t Threshold_NewLayer1_Option2 = 29.51;
-  Double_t Threshold_NewLayer1_Option3 = 30.51;
-  Double_t Threshold_NewLayer1_Option4 = 31.51;
-  Double_t Threshold_NewLayer1_Option5 = 32.51;
-  Double_t Threshold_NewLayer1_Option6 = 35.51;
-  Double_t Threshold_NewLayer1_Option7 = 35.51;
-  Double_t Threshold_NewLayer1_Option8 = 27.51;
-  Double_t Threshold_NewLayer1_Option9 = 35.51;
-  Double_t Threshold_NewLayer1_Option10 = 35.51;
-  Double_t Threshold_NewLayer1_Option11 = 36.51;
-  Double_t Threshold_NewLayer1_Option12 = 37.51;
-  Double_t Threshold_NewLayer1_Option13 = 37.51;
-  Double_t Threshold_NewLayer1_Option14 = 37.51;
-  Double_t Threshold_NewLayer1_Option15 = 33.51;
-  Double_t Threshold_NewLayer1_Option16 = 37.51;
-  Double_t Threshold_NewLayer1_Option17 = 37.51;
-  Double_t Threshold_NewLayer1_Option18 = 37.51;
-  Double_t Threshold_NewLayer1_Option19 = 37.51;
-  Double_t Threshold_NewLayer1_Option20 = 37.51;
-  Double_t Threshold_NewLayer1_Option21 = 34.51;
-  Double_t Threshold_NewLayer1_Option22 = 28.51;
-  Double_t Threshold_NewLayer1_Option31_extrap = 29.51;
-  */
+  Double_t Threshold_NewLayer1_noIso   = 33.51;
+  Double_t Threshold_NewLayer1_Option1 = 26.51;
+  Double_t Threshold_NewLayer1_Option2 = 34.51;
+  Double_t Threshold_NewLayer1_Option3 = 36.51;
+  Double_t Threshold_NewLayer1_Option4 = 36.51;
+  Double_t Threshold_NewLayer1_Option5 = 37.51;
+  Double_t Threshold_NewLayer1_Option6 = 37.51;
+  Double_t Threshold_NewLayer1_Option7 = 37.51;
+  Double_t Threshold_NewLayer1_Option8 = 30.51;
+  Double_t Threshold_NewLayer1_Option9 = 38.51;
+  Double_t Threshold_NewLayer1_Option10 = 38.51;
+  Double_t Threshold_NewLayer1_Option11 = 39.51;
+  Double_t Threshold_NewLayer1_Option12 = 40.51;
+  Double_t Threshold_NewLayer1_Option13 = 40.51;
+  Double_t Threshold_NewLayer1_Option14 = 40.51;
+  Double_t Threshold_NewLayer1_Option15 = 37.51;
+  Double_t Threshold_NewLayer1_Option16 = 40.51;
+  Double_t Threshold_NewLayer1_Option17 = 40.51;
+  Double_t Threshold_NewLayer1_Option18 = 40.51;
+  Double_t Threshold_NewLayer1_Option19 = 40.51;
+  Double_t Threshold_NewLayer1_Option20 = 40.51;
+  Double_t Threshold_NewLayer1_Option21 = 39.51;
+  Double_t Threshold_NewLayer1_Option22 = 33.51;
+  Double_t Threshold_NewLayer1_Option23 = 30.51;
+  Double_t Threshold_NewLayer1_Option24 = 28.51;
+  Double_t Threshold_NewLayer1_Option25 = 34.51;
+  Double_t Threshold_NewLayer1_Option26 = 26.51;
+  Double_t Threshold_NewLayer1_Option27 = 36.51;
+  Double_t Threshold_NewLayer1_Option28 = 29.51;
+  Double_t Threshold_NewLayer1_Option29 = 30.51;
+  Double_t Threshold_NewLayer1_Option30 = 34.51;
+  Double_t Threshold_NewLayer1_Option31 = 33.51;
+  Double_t Threshold_NewLayer1_Option31_extrap = 33.51;
 
   map<int, int> remap;
   remap[0] = 6 ;
@@ -192,8 +182,6 @@ void ApplyIsolationForTurnOns(Bool_t nTTRange = kTRUE)
   for(UInt_t i = 0 ; i < treeIn->GetEntries() ; ++i)
     {
       treeIn->GetEntry(i);
-      if(in_L1Tau_nTT<60 && nTTRange) continue;
-
       pt->Fill(in_OfflineTau_pt);
       Int_t Cut_L1Tau_Iso_Option1   = histosIsolation["LUT_Progression_1"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
       Int_t Cut_L1Tau_Iso_Option2   = histosIsolation["LUT_Progression_2"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
@@ -217,7 +205,16 @@ void ApplyIsolationForTurnOns(Bool_t nTTRange = kTRUE)
       Int_t Cut_L1Tau_Iso_Option20  = histosIsolation["LUT_Progression_20"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
       Int_t Cut_L1Tau_Iso_Option21  = histosIsolation["LUT_Progression_21"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
       Int_t Cut_L1Tau_Iso_Option22  = histosIsolation["LUT_Progression_22"]->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
-      //Int_t Cut_L1Tau_Iso_Option31_extrap  = histosIsolation["LUT_Progression_31_extrap"]->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option23  = histosIsolation["LUT_Progression_23"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option24  = histosIsolation["LUT_Progression_24"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option25  = histosIsolation["LUT_Progression_25"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option26  = histosIsolation["LUT_Progression_26"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option27  = histosIsolation["LUT_Progression_27"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option28  = histosIsolation["LUT_Progression_28"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option29  = histosIsolation["LUT_Progression_29"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option30  = histosIsolation["LUT_Progression_30"] ->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option31  = histosIsolation["LUT_Progression_31"]->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
+      Int_t Cut_L1Tau_Iso_Option31_extrap  = histosIsolation["LUT_Progression_31_extrap"]->GetBinContent(in_compressedieta+1,in_compressedE+1,in_compressednTT+1);
 	
       if(in_L1Tau_CalibPt>=Threshold_NewLayer1_noIso) pt_pass_noIso->Fill(in_OfflineTau_pt);
       if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option1 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option1) pt_pass_Option1->Fill(in_OfflineTau_pt);
@@ -242,7 +239,16 @@ void ApplyIsolationForTurnOns(Bool_t nTTRange = kTRUE)
       if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option20 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option20) pt_pass_Option20->Fill(in_OfflineTau_pt);
       if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option21 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option21) pt_pass_Option21->Fill(in_OfflineTau_pt);
       if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option22 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option22) pt_pass_Option22->Fill(in_OfflineTau_pt);
-      //if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option31_extrap && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option31_extrap) pt_pass_Option31_extrap->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option23 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option23) pt_pass_Option23->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option24 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option24) pt_pass_Option24->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option25 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option25) pt_pass_Option25->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option26 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option26) pt_pass_Option26->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option27 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option27) pt_pass_Option27->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option28 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option28) pt_pass_Option28->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option29 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option29) pt_pass_Option29->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option30 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option30) pt_pass_Option30->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option31 && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option31) pt_pass_Option31->Fill(in_OfflineTau_pt);
+      if(in_L1Tau_CalibPt>=Threshold_NewLayer1_Option31_extrap && in_L1Tau_Iso<=Cut_L1Tau_Iso_Option31_extrap) pt_pass_Option31_extrap->Fill(in_OfflineTau_pt);
     }
 
   TGraphAsymmErrors* turnOn_noIso = new TGraphAsymmErrors(pt_pass_noIso,pt,"cp");
@@ -313,6 +319,33 @@ void ApplyIsolationForTurnOns(Bool_t nTTRange = kTRUE)
 
   TGraphAsymmErrors* turnOn_Option22 = new TGraphAsymmErrors(pt_pass_Option22,pt,"cp");
   turnOn_Option22->Write();
+
+  TGraphAsymmErrors* turnOn_Option23 = new TGraphAsymmErrors(pt_pass_Option23,pt,"cp");
+  turnOn_Option23->Write();
+
+  TGraphAsymmErrors* turnOn_Option24 = new TGraphAsymmErrors(pt_pass_Option24,pt,"cp");
+  turnOn_Option24->Write();
+
+  TGraphAsymmErrors* turnOn_Option25 = new TGraphAsymmErrors(pt_pass_Option25,pt,"cp");
+  turnOn_Option25->Write();
+
+  TGraphAsymmErrors* turnOn_Option26 = new TGraphAsymmErrors(pt_pass_Option26,pt,"cp");
+  turnOn_Option26->Write();
+
+  TGraphAsymmErrors* turnOn_Option27 = new TGraphAsymmErrors(pt_pass_Option27,pt,"cp");
+  turnOn_Option27->Write();
+
+  TGraphAsymmErrors* turnOn_Option28 = new TGraphAsymmErrors(pt_pass_Option28,pt,"cp");
+  turnOn_Option28->Write();
+
+  TGraphAsymmErrors* turnOn_Option29 = new TGraphAsymmErrors(pt_pass_Option29,pt,"cp");
+  turnOn_Option29->Write();
+
+  TGraphAsymmErrors* turnOn_Option30 = new TGraphAsymmErrors(pt_pass_Option30,pt,"cp");
+  turnOn_Option30->Write();
+
+  TGraphAsymmErrors* turnOn_Option31 = new TGraphAsymmErrors(pt_pass_Option31,pt,"cp");
+  turnOn_Option31->Write();
 
   TGraphAsymmErrors* turnOn_Option31_extrap = new TGraphAsymmErrors(pt_pass_Option31_extrap,pt,"cp");
   turnOn_Option31_extrap->Write();
